@@ -1,0 +1,14 @@
+"Refract"
+{
+ 	"$model" 1
+	"$nodecal" 1
+ 	
+	"$REFRACTTINT" "{200 200 200}"
+	"$scale" "[1 1]"
+	
+	"$normalmap" "Models/scope_normal2"
+	"$refractamount" "-0.04"
+	
+	$refracttinttexture "models/scope_dif3"
+}
+

@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+$basetexture "models\props_se\boat\life_preserver"
+$phong 1
+$phongexponent 30
+$phongboost 2
+$phongfresnelranges "[.3 .6 4]"
+
+$basemapalphaphongmask 1
+$selfillum 1
+$selfillummask "models\props_se\boat\life_preserver_selfillum"
+}

@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/afterword/mask"
+	"$alphatest" 1
+}

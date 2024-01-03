@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "snow/station_signs"
+	"$surfaceprop" "MetalVent"
+}

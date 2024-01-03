@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_ol/light_switch"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models\props_ol\light_switch_ref"
+}

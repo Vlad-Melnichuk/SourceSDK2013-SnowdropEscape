@@ -1,0 +1,10 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "se_building/wall_002"
+	"$surfaceprop"  "concrete"
+	"$detail" "detail\beton"
+	"$detailscale" "3.583"
+	"$detailblendfactor" 0.8
+	"$detailblendmode" "0"
+
+}

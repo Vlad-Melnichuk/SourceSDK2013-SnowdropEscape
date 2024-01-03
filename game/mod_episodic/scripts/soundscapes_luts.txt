@@ -1,0 +1,272 @@
+"luts.surface_ambient"
+{
+	
+	"dsp"	"1"
+
+	// wind
+	
+	"playlooping"
+	{
+		"volume"	"0.35"
+		"wave"		"ambient/wind/wind_rooftop1.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playrandom"
+	{
+		"time"		"5, 15"
+		"volume"	"0.4,0.6"
+		"pitch"		"90,115"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"
+		"rndwave"
+		{
+			"wave"	"ambient/wind/windgust.wav"
+			"wave"  "ambient/wind/windgust_strong.wav"
+		}
+		
+	}
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_shoreline"	
+		"volume"	"0.2"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_distant_shoreline"	
+		"volume"	"0.7"
+	}
+}
+
+
+"luts.surface_tube"
+{
+	
+	"dsp"	"1"
+
+	// wind
+	
+	"playlooping"
+	{
+		"volume"	"0.35"
+		"wave"		"ambient/wind/wind_rooftop1.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playrandom"
+	{
+		"time"		"5, 15"
+		"volume"	"0.4,0.6"
+		"pitch"		"90,115"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"
+		"rndwave"
+		{
+			"wave"	"ambient/wind/windgust.wav"
+			"wave"  "ambient/wind/windgust_strong.wav"
+		}
+		
+	}
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_metalstress"	
+		"volume"	"0.7"
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_shoreline"	
+		"volume"	"0.2"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_distant_shoreline"	
+		"volume"	"0.7"
+	}
+}
+
+"luts.surface_town"
+{
+	// wind, rocks, water, creaking
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_windgusts"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_crumblycliff"
+		"volume"	"1.0"
+	}
+	
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep2_forest.util_small_river"
+		"volume"	"0.4"
+	}
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep2_forest.util_shoreline"
+		"volume"	"0.3"
+	}
+
+	
+	"playrandom"
+	{
+		"time"		"5,15"
+		"volume"	"0.35,0.55"
+		"pitch"		"70,90"
+
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"random"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/metal_stress2.wav"
+			"wave"	"ambient/materials/metal_stress4.wav"
+			"wave"	"ambient/materials/metal4.wav"
+			"wave"	"ambient/materials/rustypipes1.wav"
+			"wave"	"ambient/materials/shipgroan1.wav"
+			"wave"	"ambient/materials/shipgroan2.wav"
+			"wave"	"ambient/materials/shipgroan3.wav"
+			"wave"	"ambient/materials/shipgroan4.wav"
+		}
+	}	
+}
+"luts.surface_town2"
+{
+	"playrandom"
+	{
+		"volume"	"0.4,0.9"
+		"pitch"		"100"
+		"time"		"1.0, 5.0"
+		"pitch"		"90,130"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"random"
+		"rndwave"
+		{
+			"wave" "ambient/wind/wind_med1.wav"
+			"wave" "ambient/wind/wind_hit1.wav"
+			"wave" "ambient/wind/wind_hit2.wav"
+			"wave" "ambient/wind/wind_snippet3.wav"
+			"wave" "ambient/wind/wind_snippet4.wav"
+			"wave" "ambient/wind/wind_snippet5.wav"
+		}
+	}
+}
+
+"luts.canals_tunnel"
+{
+	"dsp"	"1"
+
+	// This is the sound of the tunnel
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/ambience5.wav"
+	}
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/levels/canals/waterleak_loop1.wav"
+		"pitch"		"100"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_fardrips"
+		"position"	"0"
+		"volume"	"1.0"
+	}
+}
+
+"luts.canals_tunnel2"
+{
+	"dsp"	"1"
+
+	"playsoundscape"	
+	{
+		"name"		"city_searching_level3"
+		"volume"	"0.1"
+		
+	}
+	
+	"playlooping"
+	{
+		"wave"	"ambient/levels/canals/water_rivulet_loop2.wav"
+		"volume"	"0.3"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"d1_canals.util_drips"
+		"volume"	"1.0"
+	}
+	
+	"playsoundscape"	
+	{
+		"name"		"d1_truck_pass"
+		"volume"	"0.2"
+	}	
+}
+
+
+"luts.canals_night"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_shoreline"
+		"volume"	"0.8"
+	}
+
+	//"playsoundscape"
+	//{
+	//	"name"		"d1_canals.util_birds"
+	//	"volume"	"0.2"
+	//}
+
+	"playsoundscape"
+	{
+		"name"		"d1_canals.util_windgusts"
+		"volume"	"1.0"
+	}
+	"playlooping"
+	{
+		"wave"	"ambient_se/amb_insects_lp_01.wav"
+		"volume"	"1.3"
+	}
+	
+	"playrandom"
+	{
+		"time"		"8,30"
+		"volume"	"0.8,1.2"
+		"pitch"		"90,115"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/canals/critter2.wav"
+			"wave"	"ambient/levels/canals/critter3.wav"
+			"wave"	"ambient/levels/canals/critter6.wav"
+		}
+	}
+
+}

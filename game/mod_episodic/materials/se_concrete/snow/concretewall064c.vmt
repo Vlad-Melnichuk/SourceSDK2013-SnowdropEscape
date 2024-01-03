@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	// Original shader: BaseTimesLightmap
+	"$basetexture" "se_concrete/snow/concretewall064c"
+	"$surfaceprop" "brick"
+
+}

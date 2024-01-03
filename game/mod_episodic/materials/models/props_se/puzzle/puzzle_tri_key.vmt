@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/puzzle/puzzle_tri_key"
+	"$selfillum" "1"
+	"$selfillumtint" "[0 0.20 0.10]"
+}

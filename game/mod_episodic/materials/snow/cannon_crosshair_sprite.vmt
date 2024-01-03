@@ -1,0 +1,16 @@
+//"UnlitGeneric"
+//{
+//	"$basetexture" "sprites/sunflare_02"
+//	//"$additive" "1"
+//	"$translucent" "1"
+//	"$vertexcolor" "1"
+//	//"$ignorez" "1"
+//}
+"Sprite"
+{
+	//$nosrgb 1
+	"$spriteorientation" "vp_parallel"
+	"$spriteorigin" "[ 0.50 0.50 ]"
+	"$basetexture" "snow/cannon_crosshair_sprite"
+	"$additive" "1"
+}

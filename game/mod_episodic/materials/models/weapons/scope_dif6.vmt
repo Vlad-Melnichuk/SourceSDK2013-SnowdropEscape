@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/scope_dif6"
+	"$translucent" 1
+}

@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/boat/wheel_control"
+	"$detail" "detail\metal_paint_detail"
+	"$detailscale" "6.0"
+	"$detailblendfactor" .8
+	"$detailblendmode" "0"
+}

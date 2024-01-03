@@ -1,0 +1,12 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 			"models/props_ol_junk/doc_box_4"
+	"$bumpmap" 			"models/props_ol_junk/doc_box_3_normal"
+	"$envmap" 			"env_cubemap"
+	"$normalmapalphaenvmapmask" 	"1"
+
+	$detail 			ol_detail\ris_detail004
+	$detailscale 			1.738
+	$detailblendfactor 		0.8
+	$detailblendmode 		0
+}

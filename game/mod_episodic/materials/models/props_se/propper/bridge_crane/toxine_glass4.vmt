@@ -1,0 +1,8 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "snow/glass_toxin_tank/toxine_glass4"
+	"$translucent" 1
+	"$nocull" 1
+	"$surfaceprop" "glass"
+	"%compilepassbullets" 1
+}

@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture"					"models/props_se/gaz66/gaz66_kung"
+	"$bumpmap"						"models/props_se/gaz66/gaz66_kung_norm"
+	
+	"$envmap"						"env_cubemap"
+	"$normalmapalphaenvmapmask"		1
+}

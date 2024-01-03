@@ -1,0 +1,11 @@
+"WorldVertexTransition"
+{
+	"$basetexture" "se_nature/sg_gravel_01"
+	"$baseTexture2" "se_nature/sg_grass_01"
+	"$surfaceprop" "dirt"
+	"$surfaceprop2" "dirt"
+	"$blendmodulatetexture" "nature/blendtexture01"
+	"%detailtype" "citygrass01"
+	"%tooltexture" "se_nature/blend_grass1_gravel1"
+
+}

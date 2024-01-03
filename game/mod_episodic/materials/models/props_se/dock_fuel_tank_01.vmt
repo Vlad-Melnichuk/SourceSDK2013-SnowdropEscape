@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_se/Dock_Fuel_Tank_01"
+
+}

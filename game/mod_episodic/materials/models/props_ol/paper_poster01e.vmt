@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_ol/paper_poster01e"
+
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models\props_ol\paper_poster01_ref"
+}

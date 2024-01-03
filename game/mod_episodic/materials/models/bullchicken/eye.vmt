@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$detail" "detail/detail_noise1"
+	"$detailscale" 2.5
+	"$basetexture" "models/bullchicken/eye"
+	
+	"$bumpmap" "models/bullchicken/eye_norm"
+	$phong 1
+	$phongexponent   5
+	$phongboost    .3
+	$phongfresnelranges  "[0.5 0.5 0.5]"
+	
+	//"$envmap" "env_cubemap"
+	//$normalmapalphaenvmapmask 1
+	//"$envmapmask" "models/bullchicken/eye_env"
+}

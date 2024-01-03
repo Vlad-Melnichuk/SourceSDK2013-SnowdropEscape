@@ -1,0 +1,14 @@
+vertexlitgeneric
+{
+$basetexture "se_concrete/drainage_brickwall_01"
+//$bumpmap "se_concrete/drainage_brickwall_01_height-ssbump"
+
+
+
+
+$surfaceprop concrete
+$detail "detail\dt_brick"
+$detailscale 10
+$detailblendfactor .6
+$detailblendmode 0
+}

@@ -1,0 +1,14 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_a72/concrete_barrier_skin01"
+
+$bumpmap "models/props_a72/concrete_barrier_normal"
+
+	
+$detail detail\metal_detail_01
+$detailscale 3.05
+$detailblendfactor 0.3
+$detailblendmode 0
+
+
+}

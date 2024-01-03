@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "mus/metro_ring/sg_marble_grey"
+	"$bumpmap" "mus/metro_ring/sg_marble_grey_norm"
+	"$surfaceprop" "Tile"
+}

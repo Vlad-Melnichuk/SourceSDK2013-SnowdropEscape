@@ -1,0 +1,76 @@
+// 357
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"			"#HL2_358Handgun"
+	"viewmodel"		"models/weapons/v_garand.mdl"
+	"playermodel"		"models/weapons/w_garand.mdl"
+	"anim_prefix"		"python"
+	"bucket"			"3"
+	"bucket_position"	"0"
+	"bucket_360"			"0"
+	"bucket_position_360"	"1"
+
+	"clip_size"			"8"
+	"default_clip"		"5"
+	"primary_ammo"		"357"
+	"secondary_ammo"	"None"
+
+	"weight"		"7"
+	"rumble"		"2"
+	"item_flags"		"0"
+	
+	ExpOffset
+	{
+	"x" "-10"
+	"y" "-5.34"
+	"z" "4.25"
+	}
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"empty"		"Weapon_Pistol.Empty"
+		"single_shot"	"Weapon_357.Single"
+		"empty_shot"		"Weapon_357.Single_empty"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+				"font"		"WeaponIcons"
+				"character"	"e"
+		}
+		"weapon_s"
+		{	
+				"font"		"WeaponIconsSelected"
+				"character"	"e"
+		}
+		"weapon_small"
+		{
+				"font"		"WeaponIconsSmall"
+				"character"	"q"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIconsSmall"
+				"character"	"q"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

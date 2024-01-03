@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/propper/bridge_crane/crane_base"
+	"$detail" "detail\noise_detail_01"
+	"$detailscale" "20.0"
+	"$detailblendfactor" .4
+	"$detailblendmode" "0"
+	
+
+}

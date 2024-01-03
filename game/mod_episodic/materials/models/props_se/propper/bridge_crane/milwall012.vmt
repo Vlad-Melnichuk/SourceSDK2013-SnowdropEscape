@@ -1,0 +1,5 @@
+vertexlitgeneric
+{
+$basetexture "se_wood\milwall012"
+$surfaceprop wood_plank
+}

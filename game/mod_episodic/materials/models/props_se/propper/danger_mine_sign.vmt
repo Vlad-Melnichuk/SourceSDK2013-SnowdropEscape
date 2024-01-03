@@ -1,0 +1,5 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "snow/danger_mine_sign"
+	"$surfaceprop" "metalpanel"
+}

@@ -1,0 +1,81 @@
+// Shotgun
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"	"#HL2_GLAUNCHER"
+	"viewmodel"				"models/weapons/v_glauncher.mdl"
+	"playermodel"			"models/weapons/w_glauncher.mdl"
+	"anim_prefix"			"shotgun"
+	"bucket"				"1"
+	"bucket_position"		"0"
+	"bucket_360"			"1"
+	"bucket_position_360"	"1"
+
+	"clip_size"				"1"
+	"primary_ammo"			"SMG2_Grenade"
+	"secondary_ammo"		"None"
+
+	"weight"				"4"
+	"rumble"			"5"
+	"item_flags"			"0"
+	
+	IronSight
+	{
+		"forward"	"-5"
+		"right"		"-3.7"
+		"up"		"0.3"
+		"roll"		"0"
+		"fov"		"-10"
+	}
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+
+		"empty"				"Weapon_Shotgun.Empty"
+		"reload"			"Weapon_Shotgun.Reload"
+		"single_shot"		"Weapon_SOS.Single"
+		"double_shot"		"Weapon_SOS.Double"
+
+		"reload_npc"		"Weapon_Shotgun.Reload"
+		"single_shot_npc"	"Weapon_SOS.Single"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+				"font"		"WeaponIcons"
+				"character"	"T"
+		}
+		"weapon_s"
+		{	
+				"font"		"WeaponIconsSelected"
+				"character"	"T"
+		}
+		"weapon_small"
+		{
+				"font"		"WeaponIconsSmall"
+				"character"	"T"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIconsSmall"
+				"character"	"s"
+		}
+		"crosshair"
+		{
+				"font"		"Crosshairs"
+				"character"	"Q"
+		}
+		"autoaim"
+		{
+				"file"		"sprites/crosshairs"
+				"x"			"0"
+				"y"			"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

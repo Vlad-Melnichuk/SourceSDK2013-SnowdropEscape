@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "snow/ropeladder"
+	"$surfaceprop" "Wood_Crate"
+	"$alphatest" 1
+}

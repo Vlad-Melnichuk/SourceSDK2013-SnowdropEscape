@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/scope_dif3a"
+	"$translucent" 1
+}

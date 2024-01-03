@@ -1,0 +1,12 @@
+VertexLitGeneric
+{
+$baseTexture "models\v_models\Weapons\eq_bile_flask/v_bile_flask_cap"
+$phong 1
+$phongexponent 20
+$phongfresnelranges "[1 0.5 8]"
+$phongboost 3
+$basemapalphaphongmask 1
+$envmaptint "[.05 .03 .01]"
+$envmap env_cubemap
+$basealphaenvmapmask 1
+}

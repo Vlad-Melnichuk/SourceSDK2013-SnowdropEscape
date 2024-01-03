@@ -1,0 +1,33 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_a72/concrete_barrier"
+
+$bumpmap "models/props_a72/concrete_barrier_normal"
+
+//"$phong" "1"
+////"$ambientocclusiontexture" "models/props_a72_doors/germ_door_rounded_a01_ao"
+////"$phongexponenttexture" "models/props_a72/samovar_exponent"
+//"$phongboost"	"6"
+//"$phongfresnelranges"	"[0.05 0.5 1]"
+
+//"$envmap" "env_cubemap"
+//"$envmaptint" "[0.53 0.53 0.53]"
+//"$normalmapalphaenvmapmask" "1"
+	
+$detail detail\metal_detail_01
+$detailscale 3.05
+$detailblendfactor 0.3
+$detailblendmode 0
+
+//$blendtintbybasealpha 1
+//$normalmapalphaenvmapmask 1
+//$phong 1
+//$phongexponent 80
+//$envmaptint "[.1 .1 .1 ]"
+//$envmapcontrast 1
+//$phongboost 1
+//$phongfresnelranges "[5 1 2]"
+//$halflambert 1
+//$envmaplightscale .6
+//$envmap env_cubemap
+}

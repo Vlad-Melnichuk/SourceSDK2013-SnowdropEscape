@@ -1,0 +1,13 @@
+VertexLitGeneric
+{
+	"$basetexture"	"models\props_ol\old_stalinphone"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models\props_ol\old_stalinphone_ref"
+
+	$phong 				1
+	$phongexponent 			75
+	$phongboost 			".75"
+	$phongfresnelranges 		"[.7 15 20]"
+	$bumpmap 			"models/props_ol/flat_normal"
+
+}

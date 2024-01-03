@@ -1,0 +1,14 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "snow/blood_bubble"
+	"$translucent" 1
+	Proxies 
+    { 
+		TextureScroll 
+		{ 
+			texturescrollvar $baseTextureTransform  
+			texturescrollrate 3.0 
+            texturescrollangle 270.00
+        }
+	}
+}

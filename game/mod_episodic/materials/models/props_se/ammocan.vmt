@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_se/ammocan"
+$envmap env_cubemap
+$envmapmask "models\props_se/ammocan_ref"
+}

@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "se_decals/sovok_wood_posters"
+	"$surfaceprop" "Wood_Box"
+}

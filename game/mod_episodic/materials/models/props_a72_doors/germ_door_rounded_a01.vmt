@@ -1,0 +1,20 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "models/props_a72_doors/germ_door_rounded_a01"
+	"$bumpmap" "models/props_a72_doors/germ_door_rounded_a01_normal"
+
+	"$phong" "1"
+	"$phongexponenttexture" "models/props_a72_doors/germ_door_rounded_a01_exponent"
+	"$phongboost"	"6"
+	"$phongfresnelranges"	"[0.05 0.5 1]"
+	
+	"$envmap" "env_cubemap"
+	//"$envmaptint" "[.10 .10 .10]"
+	"$normalmapalphaenvmapmask" "1"
+	
+	$detail detail\metal_detail_01
+	$detailscale 3.05
+	$detailblendfactor 0.3
+	$detailblendmode 0
+
+}

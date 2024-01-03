@@ -1,0 +1,14 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/electro_engine_var2_2"
+	
+	"$detail" "detail\metal_detail_01"
+	"$detailscale" "8.0"
+	"$detailblendfactor" .8
+	"$detailblendmode" "0"
+	
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.35 .35 .35]"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapmask" "models/props_se/electro_engine_var2_env"
+}

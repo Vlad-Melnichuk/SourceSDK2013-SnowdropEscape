@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture" "snow/cannon_crosshair"
+	"$translucent" 1
+}

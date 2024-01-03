@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "mus/spb/vo_floor_marble_tile"
+	"$surfaceprop" "Concrete"
+}

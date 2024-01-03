@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/boat/crane_winch"
+	
+	"$detail" "detail\metal_detail_01"
+	"$detailscale" "7.0"
+	"$detailblendfactor" .8
+	"$detailblendmode" "0"
+}

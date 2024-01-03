@@ -1,0 +1,11 @@
+vertexlitgeneric
+{
+	"$basetexture"	"se_metal\ibeama"
+	"$surfaceprop" "solidmetal"
+	
+	"$detail" "detail\metal_detail_01"
+	"$detailscale" "8.0"
+	"$detailblendfactor" .8
+	"$detailblendmode" "0"
+
+}

@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/propper/power_rec_3"
+	"$selfillum" 1
+}

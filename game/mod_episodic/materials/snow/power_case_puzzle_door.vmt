@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "snow/power_case_puzzle_door"
+	"$surfaceprop" "MetalVent"
+}

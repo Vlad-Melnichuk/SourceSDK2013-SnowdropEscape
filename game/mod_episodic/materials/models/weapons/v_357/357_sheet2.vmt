@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/Weapons/v_357/357_sheet"
+	
+	"$selfillum" 1
+	
+	"$model" 1
+}

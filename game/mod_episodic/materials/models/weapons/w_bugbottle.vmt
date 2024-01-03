@@ -1,0 +1,10 @@
+VertexLitGeneric
+{
+$baseTexture "models\weapons/w_bugbottle"
+$bumpmap "models\Weapons/w_bugbottle_norm"
+$halflambert 1
+$phong 1
+$phongexponent 120
+$phongfresnelranges "[1 0.5 8]"
+$phongboost 5
+}

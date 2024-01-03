@@ -1,0 +1,9 @@
+LightmappedGeneric
+{
+$vertexcolor 1
+$vertexalpha 1
+$basetexture "se_decals/posters_1990s_4"
+$decal 1
+$decalscale 0.125
+$translucent 1
+}

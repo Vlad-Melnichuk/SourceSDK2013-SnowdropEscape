@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "snow/paints/paint003a"
+	"$additive" 1
+		"$decal" 1
+}

@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/train/train_boxcar05"
+	"$detail" "detail\metal_detail_01"
+	"$detailscale" "12.0"
+	"$detailblendfactor" .9
+	"$detailblendmode" "0"
+	
+}

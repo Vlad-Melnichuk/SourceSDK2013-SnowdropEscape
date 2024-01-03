@@ -1,0 +1,20 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/ar2_re_2"
+	
+	"$bumpmap" "models/weapons/ar2_re_2_norm"
+	
+	$phong 1
+	//$phongexponent   20
+	$phongexponenttexture "models/weapons/ar2_re_2_exp"
+    $phongboost    0.2
+	//$phongfresnelranges  "[0.5 0.5 0.5]"
+	
+	"$detail" "detail\metal_detail_01"
+	"$detailscale" "20.0"
+	"$detailblendfactor" 0.8
+	"$detailblendmode" "0"
+	
+	$selfillum 1
+    $selfillummask "models/weapons/ar2_re_2_mask"
+}

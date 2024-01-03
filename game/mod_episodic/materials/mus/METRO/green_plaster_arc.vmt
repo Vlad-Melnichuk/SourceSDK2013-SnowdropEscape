@@ -1,0 +1,9 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "mus/metro/green_plaster_arc"
+	"$surfaceprop"  "concrete"
+	"$detail" "detail\plaster_detail_01"
+	"$detailscale" "8.283"
+	"$detailblendfactor" 1.2
+	"$detailblendmode" "0"
+}

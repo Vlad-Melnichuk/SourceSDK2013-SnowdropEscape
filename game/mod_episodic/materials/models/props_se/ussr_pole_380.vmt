@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/ussr_pole_380"
+	"$bumpmap" "models/props_se/ussr_pole_380_norm"
+	"$detail" "detail\metal_paint_detail"
+	"$detailscale" "6.0"
+	"$detailblendfactor" .8
+	"$detailblendmode" "0"
+}

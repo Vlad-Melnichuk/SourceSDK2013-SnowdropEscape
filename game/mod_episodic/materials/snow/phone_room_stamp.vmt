@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "snow/phone_room_stamp"
+	"$alphatest" 1
+	"$nocull" 1
+	"$translucent" 1
+}

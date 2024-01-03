@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "mus/metro_ring/ar_walldoor"
+	"$bumpmap" "mus/metro_ring/ar_walldoor_norm"
+}

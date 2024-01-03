@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/w_flaregun2"
+	"$nocull" 1
+}

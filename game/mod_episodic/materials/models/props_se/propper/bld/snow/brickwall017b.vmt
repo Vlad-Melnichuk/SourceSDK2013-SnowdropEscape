@@ -1,0 +1,13 @@
+"vertexlitgeneric"
+{
+	// original shader: basetimeslightmap
+	"$basetexture" "brick/brickwall017b"
+	"$surfaceprop" "brick"
+
+	"$detail" "detail\noise_detail_01"
+	"$detailscale" "7.740"
+	"$detailblendfactor" .8
+
+	"$detailblendmode" 0
+	"%keywords" "c17sewers"
+}

@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/puzzle/v-meter_4"
+	$selfillum 1
+	"$selfillumtint" "[.35 .35 .35]"
+}

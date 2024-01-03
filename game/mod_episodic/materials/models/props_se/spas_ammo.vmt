@@ -1,0 +1,8 @@
+VertexLitGeneric
+{
+$baseTexture "models\props_se/spas_ammo"
+$envmap env_cubemap
+$basealphaenvmapmask 1
+$envmapfresnel 1
+$envmapfresnelMinMaxExp "[0.4 1 3]"
+}

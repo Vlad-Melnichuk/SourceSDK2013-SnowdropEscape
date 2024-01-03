@@ -1,0 +1,10 @@
+vertexlitgeneric
+{
+	$basetexture "se_concrete/concrete_floor_04"
+	$surfaceprop concrete
+
+	"$detail" "detail\beton"
+	"$detailscale" "1.0"
+	"$detailblendfactor" .6
+	"$detailblendmode" "0"
+}

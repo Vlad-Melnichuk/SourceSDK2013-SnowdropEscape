@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/weapons/ak47_pricel"
+	"$additive" 1
+}

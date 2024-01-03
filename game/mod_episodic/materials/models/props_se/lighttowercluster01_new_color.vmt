@@ -1,0 +1,22 @@
+VertexLitGeneric
+{
+	$basetexture	models\props_se\lighttowercluster01_new_color
+	$bumpmap	models\props_se\lighttowercluster01_new_normal
+
+	"$phong" "1"
+	"$phongboost" "20"
+	"$phongalbedoboost" "1"
+	"$phongfresnelranges" "[.9 .9 1]"
+	"$phongexponent" "80"
+	"$phongalbedotint" "1"
+	"$phongdisablehalflambert" "1"
+	
+	"$normalmapalphaenvmapmask" "1"
+
+	"$detail" "detail\metal_detail_01"
+	"$detailscale" 			"[4 4 4]"
+	"$detailblendfactor" 	"1"
+
+	"$envmap" "env_cubemap"
+	"$envmaptint" 		"[.01 .01 .01]"
+}

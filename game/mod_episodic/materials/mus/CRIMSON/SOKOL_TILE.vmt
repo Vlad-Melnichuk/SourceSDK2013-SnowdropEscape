@@ -1,0 +1,11 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "mus/crimson/sokol_tile"
+	"$surfaceprop" "tile"
+	"$bumpmap" "mus/crimson/sokol_tile_norm.vtf"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	"$envmapcontrast" 1
+	"$envmapsaturation" 1
+	"$envmaptint" "[ .56 .56 .56 ]"
+}

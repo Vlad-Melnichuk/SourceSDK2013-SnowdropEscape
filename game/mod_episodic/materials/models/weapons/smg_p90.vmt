@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/smg_p90"
+	"$detail" "detail\metal_detail_01"
+	"$detailscale" "32.0"
+	"$detailblendfactor" 2.2
+	"$detailblendmode" "0"
+}

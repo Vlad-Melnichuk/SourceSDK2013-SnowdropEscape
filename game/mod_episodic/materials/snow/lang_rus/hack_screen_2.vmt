@@ -1,0 +1,13 @@
+"UnlitGeneric"
+{
+	"$basetexture" "snow/lang_rus/hack_screen_2"
+	"Proxies"
+		{
+		"AnimatedTexture"
+			{
+				"animatedtexturevar" "$basetexture"
+				"animatedtextureframenumvar" "$frame"
+				"animatedtextureframerate" 5
+			}
+		}
+}

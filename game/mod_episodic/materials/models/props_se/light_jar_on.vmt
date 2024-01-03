@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/light_jar_on"
+	"$selfillum" 1
+}

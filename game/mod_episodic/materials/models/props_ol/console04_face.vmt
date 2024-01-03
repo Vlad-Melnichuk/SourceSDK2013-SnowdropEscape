@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/props_ol/console04_face"
+	"$surfaceprop" "metal"
+
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$envmaptint" "[.35 .35 .35]"
+
+}
+

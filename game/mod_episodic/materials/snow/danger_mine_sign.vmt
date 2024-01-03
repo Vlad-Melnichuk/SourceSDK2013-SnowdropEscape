@@ -1,0 +1,5 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "snow/danger_mine_sign"
+	"$surfaceprop" "MetalPanel"
+}

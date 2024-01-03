@@ -1,0 +1,6 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "mus/metro/green_tile"
+	"$bumpmap" "mus/metro/green_tile_normal"
+	"$surfaceprop" "Tile"
+}

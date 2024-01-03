@@ -1,0 +1,13 @@
+"UnlitGeneric"
+{
+	"$basetexture" "snow/puzzle_power_bars"
+	"Proxies"
+	{
+		"ToggleTexture"
+		{
+			"toggleTextureVar" "$baseTexture"
+			"toggleTextureFrameNumVar" "$frame"
+			"toggleTextureShouldWrap" "0"
+		}
+	}
+}

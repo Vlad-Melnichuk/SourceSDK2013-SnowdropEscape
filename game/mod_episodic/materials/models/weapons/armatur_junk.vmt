@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/weapons/armatur_junk"
+	
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/weapons/armatur_junk_env"
+}

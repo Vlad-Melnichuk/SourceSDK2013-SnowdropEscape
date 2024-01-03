@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/props_ol/consolebox04a"
+	"$surfaceprop" "metal"
+
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+	"$envmaptint" "[.35 .35 .35]"
+
+$detail ol_detail\metal_detail001
+$detailscale 1.05
+$detailblendfactor 0.8
+$detailblendmode 0
+
+}
+

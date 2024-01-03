@@ -1,0 +1,7 @@
+"vertexlitgeneric"
+{
+	"$basetexture" "se_building/deco/fd01a"
+	"$envmap" "env_cubemap"
+	//"$envmaptint" "[.75 .75 .75]"
+	"$envmapmask" "se_building/deco/zenv1"
+}

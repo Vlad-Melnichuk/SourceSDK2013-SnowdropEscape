@@ -1,0 +1,19 @@
+"UnlitTwoTexture"
+{
+	"$basetexture" "models/weapons/pda/projector_noise2"
+	"$texture2" "models/weapons/pda/aperture_pda_screen_01"
+	"$mod2x" "1"
+	//"$additive" "1"
+	"$surfaceprop" "glass"
+	"$model"  "1"
+
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 11
+			"texturescrollangle" 80
+		}
+	}
+}

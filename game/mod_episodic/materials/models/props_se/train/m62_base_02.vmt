@@ -1,0 +1,13 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/train/m62_base_02"
+	
+	"$detail" "detail\noise_detail_01"
+	"$detailscale" "40.0"
+	"$detailblendfactor" 0.5
+	"$detailblendmode" "0"
+	
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[.7 .7 .7]"
+	"$envmapmask" "models/props_se/train/m62_base_02_env"
+}

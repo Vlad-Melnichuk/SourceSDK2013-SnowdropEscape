@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/vertigo/balustrade01"
+	"$detail" "detail\metal_paint_detail"
+	"$detailscale" "2.00"
+	"$detailblendfactor" 1.2
+	"$detailblendmode" "0"
+}

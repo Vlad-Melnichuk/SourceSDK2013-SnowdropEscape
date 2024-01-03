@@ -1,0 +1,9 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/props_se/propper/hospital_lab_shelf"
+	
+	"$detail" "detail\metal_detail_01"
+	"$detailscale" "8.0"
+	"$detailblendfactor" .35
+	"$detailblendmode" "0"
+}
