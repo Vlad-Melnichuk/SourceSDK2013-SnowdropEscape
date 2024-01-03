@@ -7,6 +7,7 @@
 #include "cbase.h"
 #include "const.h"
 #include "baseplayer_shared.h"
+#include "hl2_player_shared.h"
 #include "trains.h"
 #include "soundent.h"
 #include "gib.h"
@@ -6565,6 +6566,58 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
 				pWeapon->ToggleIronsights();
 				ToggleCrosshair();
 			}
+		}
+		return true;
+	}
+
+	else if (stricmp(cmd, "crosshair_on") == 0)
+	{
+		ShowCrosshair(true);
+		return true;
+	}
+	else if (stricmp(cmd, "crosshair_off") == 0)
+	{
+		ShowCrosshair(false);
+		return true;
+	}
+
+	else if (stricmp(cmd, "ar1m1_gl_load") == 0)
+	{
+		CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
+		if (pPlayer)
+		{
+			CHL2_Player *pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+			pHL2Player->AR1M1_GL_Load();
+		}
+		return true;
+	}
+	else if (stricmp(cmd, "ar1m1_gl_unload") == 0)
+	{
+		CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
+		if (pPlayer)
+		{
+			CHL2_Player *pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+			pHL2Player->AR1M1_GL_Unload();
+		}
+		return true;
+	}
+	else if (stricmp(cmd, "smg1_gl_load") == 0)
+	{
+		CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
+		if (pPlayer)
+		{
+			CHL2_Player *pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+			pHL2Player->SMG1_GL_Load();
+		}
+		return true;
+	}
+	else if (stricmp(cmd, "smg1_gl_unload") == 0)
+	{
+		CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
+		if (pPlayer)
+		{
+			CHL2_Player *pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+			pHL2Player->SMG1_GL_Unload();
 		}
 		return true;
 	}

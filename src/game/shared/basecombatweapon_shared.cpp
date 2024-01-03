@@ -2553,15 +2553,31 @@ void CBaseCombatWeapon::ToggleIronsights(void)
 	//}
 }
 		
+#ifdef CLIENT_DLL
+
+void CC_CrosshairOff(void)
+{
+	engine->ServerCmd("crosshair_off"); //forward to server
+}
+
+static ConCommand crosshair_off("crosshair_off", CC_CrosshairOff);
+
+void CC_CrosshairOn(void)
+{
+	engine->ServerCmd("crosshair_on"); //forward to server
+}
+
+static ConCommand crosshair_on("crosshair_on", CC_CrosshairOn);
+
+#endif
 
 void CBaseCombatWeapon::EnableIronsights(void)
 {
 	//228
 
-
 	if (!HasIronsights() || m_bIsIronsighted)
 		return;
-	
+
 	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
 
 	if (!pOwner)
@@ -2569,15 +2585,16 @@ void CBaseCombatWeapon::EnableIronsights(void)
 
 	if (pOwner->SetFOV(this, pOwner->GetDefaultFOV() + GetIronsightFOVOffset(), 0.2f)) //modify the last value to adjust how fast the fov is applied
 	{
+#ifdef CLIENT_DLL
+		CC_CrosshairOff();
+#endif
 		m_bIsIronsighted = true;
 		SetIronsightTime();
 	}
-
 }
 
 void CBaseCombatWeapon::DisableIronsights(void)
 {
-	
 	if (!HasIronsights() || !m_bIsIronsighted)
 		return;
 
@@ -2588,7 +2605,10 @@ void CBaseCombatWeapon::DisableIronsights(void)
 
 	if (pOwner->SetFOV(this, 0, 0.2f)) //modify the last value to adjust how fast the fov is applied
 	{
-		
+
+#ifdef CLIENT_DLL
+		CC_CrosshairOn();
+#endif
 		//pOwner->ShowCrosshair(true);
 		m_bIsIronsighted = false;
 		SetIronsightTime();
@@ -2617,7 +2637,7 @@ void CC_ToggleIronSights(void)
 	if (pWeapon == NULL)
 		return;
 	
-	pWeapon->ToggleIronsights();
+	//pWeapon->ToggleIronsights();
 
 	
 
