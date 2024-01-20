@@ -1,4 +1,4 @@
-﻿Build started 1/3/2024 9:32:07 AM.
+﻿Build started 1/5/2024 8:52:20 AM.
      1>Project "C:\Programs\Steam\steamapps\sourcemods\sde_code\src\game\server\server_episodic.vcxproj" on node 3 (Build target(s)).
      1>PreBuildEvent:
          if EXIST ..\..\..\game\mod_episodic\bin\.\server.dll for /f "delims=" %%A in ('attrib "..\..\..\game\mod_episodic\bin\.\server.dll"') do set valveTmpIsReadOnly="%%A"
@@ -644,4 +644,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.02
+Time Elapsed 00:00:08.88
