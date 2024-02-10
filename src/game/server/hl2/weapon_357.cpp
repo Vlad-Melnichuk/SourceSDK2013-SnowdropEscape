@@ -244,48 +244,8 @@ void CWeapon357::SecondaryAttack(void)
 		return;
 	}
 
+	m_flNextSecondaryAttack = gpGlobals->curtime + 1.6f;
+
 	ToggleIronsights();
 	pOwner->ToggleCrosshair();
-
-	//
-	//pPlayer->m_nButtons &= ~IN_ATTACK2;
-	//// MUST call sound before removing a round from the clip of a CMachineGun
-	//WeaponSound(WPN_DOUBLE);
-	//
-	//pPlayer->DoMuzzleFlash();
-	//
-	//SendWeaponAnim( ACT_VM_SECONDARYATTACK );
-	//
-	//// player "shoot" animation
-	//pPlayer->SetAnimation( PLAYER_ATTACK1 );
-	//
-	//// Don't fire again until fire animation has completed
-	//m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
-	//m_iClip1 -= 2;	// Shotgun uses same clip for primary and secondary attacks
-	//
-	//Vector vecSrc	 = pPlayer->Weapon_ShootPosition();
-	//Vector vecAiming = pPlayer->GetAutoaimVector( AUTOAIM_SCALE_DEFAULT );	
-	//
-	//// Fire the bullets
-	//pPlayer->FireBullets( 12, vecSrc, vecAiming, GetBulletSpread(), MAX_TRACE_LENGTH, m_iPrimaryAmmoType, 0, -1, -1, 0, NULL, false, false );
-	//pPlayer->ViewPunch( QAngle(random->RandomFloat( -5, 5 ),0,0) );
-	//
-	//pPlayer->SetMuzzleFlashTime( gpGlobals->curtime + 1.0 );
-	//
-	//CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_SHOTGUN, 0.2 );
-	//
-	//if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
-	//{
-	//	// HEV suit - indicate out of ammo condition
-	//	pPlayer->SetSuitUpdate("!HEV_AMO0", FALSE, 0); 
-	//}
-	//
-	//if( m_iClip1 )
-	//{
-	//	// pump so long as some rounds are left.
-	//	m_bNeedPump = true;
-	//}
-	//
-	//m_iSecondaryAttacks++;
-	//gamestats->Event_WeaponFired( pPlayer, false, GetClassname() );
 }
