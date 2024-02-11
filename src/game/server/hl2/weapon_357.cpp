@@ -35,6 +35,7 @@ public:
 	CWeapon357( void );
 
 	void	PrimaryAttack( void );
+	void	SecondaryAttack(void);
 	bool	Reload( void );
 	void	HoldIronsight(void);
 	void	Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
@@ -193,11 +194,30 @@ void CWeapon357::HoldIronsight(void)
 
 void CWeapon357::ItemPostFrame(void)
 {
-	// Allow  Ironsight
-	HoldIronsight();
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if (!pOwner)
+	{
+		return;
+	}
 
+	if (!m_bInReload && m_iClip1 > 0)
+	{
+			// Allow  Ironsight
+			HoldIronsight();
 
-	BaseClass::ItemPostFrame();
+			if ((pOwner->m_afButtonPressed & IN_ATTACK) && gpGlobals->curtime >= m_flNextPrimaryAttack) 
+			{
+				PrimaryAttack();
+			}
+
+			if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
+			// toggle zoom on rifle like vanilla HL2 crossbow
+			{
+				SecondaryAttack();
+			}
+	}
+	else
+		BaseClass::ItemPostFrame(); //reload
 }
 
 bool CWeapon357::Reload(void)
@@ -219,4 +239,19 @@ bool CWeapon357::Reload(void)
 	{
 		return false;
 	}
+}
+
+void CWeapon357::SecondaryAttack(void)
+{
+	//// Only the player fires this way so we can cast
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if (!pOwner)
+	{
+		return;
+	}
+
+	m_flNextSecondaryAttack = gpGlobals->curtime + 1.6f;
+
+	ToggleIronsights();
+	pOwner->ToggleCrosshair();
 }

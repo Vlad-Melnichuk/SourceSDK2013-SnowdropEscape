@@ -35,9 +35,10 @@ public:
 	CWeaponAnnabelle(void);
 
 	void PrimaryAttack(void);
-	void	HoldIronsight(void);
+	void SecondaryAttack(void);
+	void HoldIronsight(void);
 	void ItemHolsterFrame(void);
-	void	ItemPostFrame(void);
+	void ItemPostFrame(void);
 	bool StartReload(void);
 	bool Reload(void);
 	void FillClip(void);
@@ -532,9 +533,43 @@ void CWeaponAnnabelle::HoldIronsight(void)
 
 void CWeaponAnnabelle::ItemPostFrame(void)
 {
-	// Allow  Ironsight
-	HoldIronsight();
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if (!pOwner)
+	{
+		return;
+	}
+
+	if (!m_bInReload && m_iClip1 > 0)
+	{
+			// Allow  Ironsight
+			HoldIronsight();
+
+			if ((pOwner->m_afButtonPressed & IN_ATTACK) && gpGlobals->curtime >= m_flNextPrimaryAttack)
+			{
+				PrimaryAttack();
+			}
+
+			if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
+			// toggle zoom on sniper weapon like vanilla HL2 crossbow
+			{
+				SecondaryAttack();
+			}
+	}
+	else
+		BaseClass::ItemPostFrame(); //reload
+}
+
+void CWeaponAnnabelle::SecondaryAttack(void)
+{
+	//// Only the player fires this way so we can cast
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if (!pOwner)
+	{
+		return;
+	}
+
+	ToggleIronsights();
+	pOwner->ToggleCrosshair();
 
 
-	BaseClass::ItemPostFrame();
 }
