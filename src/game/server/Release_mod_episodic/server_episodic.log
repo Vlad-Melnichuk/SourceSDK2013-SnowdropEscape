@@ -1,4 +1,4 @@
-﻿Build started 1/5/2024 8:52:20 AM.
+﻿Build started 2/11/2024 11:51:28 AM.
      1>Project "C:\Programs\Steam\steamapps\sourcemods\sde_code\src\game\server\server_episodic.vcxproj" on node 3 (Build target(s)).
      1>PreBuildEvent:
          if EXIST ..\..\..\game\mod_episodic\bin\.\server.dll for /f "delims=" %%A in ('attrib "..\..\..\game\mod_episodic\bin\.\server.dll"') do set valveTmpIsReadOnly="%%A"
@@ -12,11 +12,9 @@
          Running VPC CRC Check - server_episodic.vpc
          Access is denied.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\..\common /I..\..\public /I..\..\public\tier0 /I..\..\public\tier1 /I..\..\game\server\generated_proto_mod_episodic /I"..\..\thirdparty\protobuf-2.3.0\src" /I.\ /I..\..\game\shared /I..\..\utils\common /I..\..\game\shared\econ /I..\..\game\server\NextBot /I..\..\game\shared\hl2 /I..\..\game\shared\episodic /I.\hl2 /I.\episodic /Zi /nologo /W4 /WX /MP /O2 /Ob2 /Oi /Ot /Oy- /D VPC /D RAD_TELEMETRY_DISABLED /D WIN32 /D _WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _ALLOW_RUNTIME_LIBRARY_MISMATCH /D _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH /D _ALLOW_MSC_VER_MISMATCH /D _USING_V110_SDK71_ /D _WINDLL /D _MBCS /D COMPILER_MSVC32 /D COMPILER_MSVC /D _DLL_EXT=.dll /D DLLNAME=server /D BINK_VIDEO /D AVI_VIDEO /D WMV_VIDEO /D DEV_BUILD /D FRAME_POINTER_OMISSION_DISABLED /D GAME_DLL /D VECTOR /D VERSION_SAFE_STEAM_API_INTERFACES /D PROTECTED_THINGS_ENABLE /D sprintf=use_Q_snprintf_instead_of_sprintf /D strncpy=use_Q_strncpy_instead /D _snprintf=use_Q_snprintf_instead /D fopen=dont_use_fopen /D HL2_DLL /D HL2_EPISODIC /D USES_SAVERESTORE /D _EXTERNAL_DLL_EXT=.dll /D VPCGAMECAPS=VALVE /D PROJECTDIR=C:\Programs\Steam\steamapps\sourcemods\sde_code\src\game\server /D VPCGAME=valve /D SOURCE1=1 /GF /Gm- /MT /GS /Gy /arch:SSE /fp:fast /Zc:wchar_t /Zc:forScope /GR /Yu"cbase.h" /Fp".\Release_mod_episodic\server.pch" /Fo".\Release_mod_episodic\/" /Fd".\Release_mod_episodic\/vc120.pdb" /Gd /TP /wd4316 /analyze- /FC /errorReport:prompt /Zm200 /d2Zi+ /Gw ..\..\game\shared\basecombatweapon_shared.cpp hl2\weapon_357.cpp hl2\weapon_annabelle.cpp player.cpp
-         basecombatweapon_shared.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\..\common /I..\..\public /I..\..\public\tier0 /I..\..\public\tier1 /I..\..\game\server\generated_proto_mod_episodic /I"..\..\thirdparty\protobuf-2.3.0\src" /I.\ /I..\..\game\shared /I..\..\utils\common /I..\..\game\shared\econ /I..\..\game\server\NextBot /I..\..\game\shared\hl2 /I..\..\game\shared\episodic /I.\hl2 /I.\episodic /Zi /nologo /W4 /WX /MP /O2 /Ob2 /Oi /Ot /Oy- /D VPC /D RAD_TELEMETRY_DISABLED /D WIN32 /D _WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D _CRT_SECURE_NO_DEPRECATE /D _CRT_NONSTDC_NO_DEPRECATE /D _ALLOW_RUNTIME_LIBRARY_MISMATCH /D _ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH /D _ALLOW_MSC_VER_MISMATCH /D _USING_V110_SDK71_ /D _WINDLL /D _MBCS /D COMPILER_MSVC32 /D COMPILER_MSVC /D _DLL_EXT=.dll /D DLLNAME=server /D BINK_VIDEO /D AVI_VIDEO /D WMV_VIDEO /D DEV_BUILD /D FRAME_POINTER_OMISSION_DISABLED /D GAME_DLL /D VECTOR /D VERSION_SAFE_STEAM_API_INTERFACES /D PROTECTED_THINGS_ENABLE /D sprintf=use_Q_snprintf_instead_of_sprintf /D strncpy=use_Q_strncpy_instead /D _snprintf=use_Q_snprintf_instead /D fopen=dont_use_fopen /D HL2_DLL /D HL2_EPISODIC /D USES_SAVERESTORE /D _EXTERNAL_DLL_EXT=.dll /D VPCGAMECAPS=VALVE /D PROJECTDIR=C:\Programs\Steam\steamapps\sourcemods\sde_code\src\game\server /D VPCGAME=valve /D SOURCE1=1 /GF /Gm- /MT /GS /Gy /arch:SSE /fp:fast /Zc:wchar_t /Zc:forScope /GR /Yu"cbase.h" /Fp".\Release_mod_episodic\server.pch" /Fo".\Release_mod_episodic\/" /Fd".\Release_mod_episodic\/vc120.pdb" /Gd /TP /wd4316 /analyze- /FC /errorReport:prompt /Zm200 /d2Zi+ /Gw hl2\weapon_357.cpp hl2\weapon_annabelle.cpp
          weapon_357.cpp
          weapon_annabelle.cpp
-         player.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Release_mod_episodic\\server.dll" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\..\lib\common\. /LIBPATH:..\..\lib\public\. shell32.lib user32.lib advapi32.lib gdi32.lib comdlg32.lib ole32.lib winmm.lib /NODEFAULTLIB:libc /NODEFAULTLIB:libcd /NODEFAULTLIB:libcmtd /MANIFEST:NO /DEBUG /PDB:".\Release_mod_episodic\/server.pdb" /SUBSYSTEM:WINDOWS,"5.01" /OPT:REF /OPT:NOICF /TLBID:1 /DYNAMICBASE:NO /NXCOMPAT /IMPLIB:".\Release_mod_episodic\server.lib" /MACHINE:X86 /SAFESEH:NO  /ignore:4221 /DLL .\Release_mod_episodic\\pointeroverride.obj
          .\Release_mod_episodic\/achievements_ep1.obj
@@ -644,4 +642,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:08.88
+Time Elapsed 00:00:03.37

@@ -539,18 +539,24 @@ void CWeaponAnnabelle::ItemPostFrame(void)
 		return;
 	}
 
-	if (!m_bInReload)
+	if (!m_bInReload && m_iClip1 > 0)
 	{
-		// Allow  Ironsight
-		HoldIronsight();
+			// Allow  Ironsight
+			HoldIronsight();
 
-		if (pOwner->m_afButtonPressed & IN_ATTACK2)// toggle zoom on mission-critical sniper weapon like vanilla HL2 crossbow
-		{
-			SecondaryAttack();
-		}
+			if ((pOwner->m_afButtonPressed & IN_ATTACK) && gpGlobals->curtime >= m_flNextPrimaryAttack)
+			{
+				PrimaryAttack();
+			}
+
+			if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
+			// toggle zoom on sniper weapon like vanilla HL2 crossbow
+			{
+				SecondaryAttack();
+			}
 	}
-
-	BaseClass::ItemPostFrame();
+	else
+		BaseClass::ItemPostFrame(); //reload
 }
 
 void CWeaponAnnabelle::SecondaryAttack(void)
@@ -561,8 +567,6 @@ void CWeaponAnnabelle::SecondaryAttack(void)
 	{
 		return;
 	}
-
-	m_flNextSecondaryAttack = gpGlobals->curtime + 1.6f;
 
 	ToggleIronsights();
 	pOwner->ToggleCrosshair();

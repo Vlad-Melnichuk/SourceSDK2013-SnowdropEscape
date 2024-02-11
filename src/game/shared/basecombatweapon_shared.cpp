@@ -2544,13 +2544,15 @@ void CBaseCombatWeapon::ToggleIronsights(void)
 	else
 	{
 	*/
+	if (!(m_bInReload || m_bInSecondaryReload))
+	{
 		if (m_bIsIronsighted)
 
 			DisableIronsights();
 
 		else
 			EnableIronsights();
-
+	}
 	//}
 }
 		

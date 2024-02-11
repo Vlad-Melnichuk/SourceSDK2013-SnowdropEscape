@@ -200,18 +200,24 @@ void CWeapon357::ItemPostFrame(void)
 		return;
 	}
 
-	if (!m_bInReload)
+	if (!m_bInReload && m_iClip1 > 0)
 	{
-		// Allow  Ironsight
-		HoldIronsight();
+			// Allow  Ironsight
+			HoldIronsight();
 
-		if (pOwner->m_afButtonPressed & IN_ATTACK2)// toggle zoom on mission-critical sniper weapon like vanilla HL2 crossbow
-		{
-			SecondaryAttack();
-		}
+			if ((pOwner->m_afButtonPressed & IN_ATTACK) && gpGlobals->curtime >= m_flNextPrimaryAttack) 
+			{
+				PrimaryAttack();
+			}
+
+			if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
+			// toggle zoom on rifle like vanilla HL2 crossbow
+			{
+				SecondaryAttack();
+			}
 	}
-
-	BaseClass::ItemPostFrame();
+	else
+		BaseClass::ItemPostFrame(); //reload
 }
 
 bool CWeapon357::Reload(void)
