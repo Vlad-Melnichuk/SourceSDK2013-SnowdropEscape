@@ -6554,7 +6554,7 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
 	else if (stricmp(cmd, "sde_ironsight") == 0)
 	{
 		CBaseCombatWeapon *pWeapon = GetActiveWeapon();
-		if (pWeapon != NULL && !(pWeapon->m_bInReload || pWeapon->m_bInSecondaryReload))
+		if (pWeapon != NULL)
 		{
 			const char* ActiveWeaponName = pWeapon->GetName();
 			if (strcmp(ActiveWeaponName, "weapon_pistol") == 0 || strcmp(ActiveWeaponName, "weapon_pistol_m1") == 0 ||
@@ -6781,7 +6781,8 @@ void CBasePlayer::ToggleCrosshair(void)
 	//if (pWeapon->m_bCanIronsighted)
 	//{
 	//}
-
+	if (pWeapon->m_bInReload || pWeapon->m_bInSecondaryReload)
+		return;
 	//else
 	//{
 	if (strcmp(ActiveWeaponName, "weapon_pistol") == 0 || strcmp(ActiveWeaponName, "weapon_357") == 0 ||
