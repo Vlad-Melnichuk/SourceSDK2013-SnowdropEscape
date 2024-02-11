@@ -146,7 +146,8 @@ void CWeaponAR2::ItemPostFrame(void)
 {
 
 	// Ironsight declare
-	HoldIronsight();
+	if (!m_bInReload)
+		HoldIronsight();
 	// See if we need to fire off our secondary round
 	if (m_bShotDelayed && gpGlobals->curtime > m_flDelayedFire)
 	{

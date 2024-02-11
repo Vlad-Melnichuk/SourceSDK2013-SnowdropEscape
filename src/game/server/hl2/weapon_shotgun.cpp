@@ -621,7 +621,9 @@ void CWeaponShotgun::SecondaryAttack( void )
 //-----------------------------------------------------------------------------
 void CWeaponShotgun::ItemPostFrame( void )
 {
-	HoldIronsight();
+	if (!m_bInReload)
+		HoldIronsight();
+
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 	if (!pOwner)
 	{

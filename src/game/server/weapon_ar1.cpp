@@ -454,7 +454,8 @@ void CWeaponar1::HoldIronsight(void)
 void CWeaponar1::ItemPostFrame(void)
 {
 	// Allow  Ironsight
-	HoldIronsight();
+	if (!m_bInReload)
+		HoldIronsight();
 
 
 	BaseClass::ItemPostFrame();

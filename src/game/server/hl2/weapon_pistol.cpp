@@ -315,7 +315,8 @@ void CWeaponPistol::ItemBusyFrame( void )
 void CWeaponPistol::ItemPostFrame( void )
 {
 
-	HoldIronsight();
+	if (!m_bInReload)
+		HoldIronsight();
 
 	BaseClass::ItemPostFrame();
 

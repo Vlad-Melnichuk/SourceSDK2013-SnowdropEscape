@@ -1744,7 +1744,9 @@ bool CWeaponRPG::Lower( void )
 //-----------------------------------------------------------------------------
 void CWeaponRPG::ItemPostFrame( void )
 {
-	HoldIronsight();
+	if (!m_bInReload)
+		HoldIronsight();
+	
 	BaseClass::ItemPostFrame();
 
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );

@@ -223,7 +223,8 @@ void CWeapon356::HoldIronsight(void)
 void CWeapon356::ItemPostFrame(void)
 {
 	// Allow  Ironsight
-	HoldIronsight();
+	if (!m_bInReload)
+		HoldIronsight();
 
 
 	BaseClass::ItemPostFrame();
