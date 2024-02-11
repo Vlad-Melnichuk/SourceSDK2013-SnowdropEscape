@@ -250,8 +250,6 @@ void CWeapon357::SecondaryAttack(void)
 		return;
 	}
 
-	m_flNextSecondaryAttack = gpGlobals->curtime + 1.6f;
-
 	ToggleIronsights();
 	pOwner->ToggleCrosshair();
 }
