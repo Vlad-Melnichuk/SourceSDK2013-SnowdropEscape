@@ -1744,6 +1744,9 @@ bool CWeaponRPG::Lower( void )
 //-----------------------------------------------------------------------------
 void CWeaponRPG::ItemPostFrame( void )
 {
+	if (gpGlobals->curtime >= m_flNextPrimaryAttack)
+		m_bInReload = false;
+
 	if (!m_bInReload)
 		HoldIronsight();
 	
@@ -2044,7 +2047,11 @@ bool CWeaponRPG::Reload( void )
 
 	WeaponSound( RELOAD );
 	DisableIronsights();
+	m_bInReload = true;
+
 	SendWeaponAnim( ACT_VM_RELOAD );
+
+	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
 
 	return true;
 }

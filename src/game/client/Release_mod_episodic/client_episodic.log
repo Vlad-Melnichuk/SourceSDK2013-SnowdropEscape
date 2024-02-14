@@ -1,5 +1,5 @@
-﻿Build started 2/11/2024 6:13:54 PM.
-     1>Project "C:\Programs\Steam\steamapps\sourcemods\sde_code\src\game\client\client_episodic.vcxproj" on node 3 (Build target(s)).
+﻿Build started 2/14/2024 9:52:17 PM.
+     1>Project "C:\Programs\Steam\steamapps\sourcemods\sde_code\src\game\client\client_episodic.vcxproj" on node 2 (Build target(s)).
      1>PreBuildEvent:
          if EXIST ..\..\..\game\mod_episodic\bin\.\client.dll for /f "delims=" %%A in ('attrib "..\..\..\game\mod_episodic\bin\.\client.dll"') do set valveTmpIsReadOnly="%%A"
          set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%
@@ -34,4 +34,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.75
+Time Elapsed 00:00:00.78
