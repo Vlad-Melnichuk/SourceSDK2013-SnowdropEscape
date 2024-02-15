@@ -389,8 +389,8 @@ void	CNPC_CombineDropship::PopulatePoseParameters( void )
 		m_poseBody_Sway			= LookupPoseParameter( "body_sway" );
 		m_poseCargo_Body_Accel  = LookupPoseParameter( "cargo_body_accel" );
 		m_poseCargo_Body_Sway   = LookupPoseParameter( "cargo_body_sway" );
-		m_poseWeapon_Pitch		= LookupPoseParameter( "weapon_pitch" );
-		m_poseWeapon_Yaw		= LookupPoseParameter( "weapon_yaw" );
+		//m_poseWeapon_Pitch		= LookupPoseParameter( "weapon_pitch" );
+		//m_poseWeapon_Yaw		= LookupPoseParameter( "weapon_yaw" );
 
 		m_sbStaticPoseParamsLoaded = true;
 	}
@@ -2794,6 +2794,9 @@ void CNPC_CombineDropship::DoCombatStuff( void )
 void CNPC_CombineDropship::UpdateContainerGunFacing( Vector &vecMuzzle, Vector &vecToTarget, Vector &vecAimDir, float *flTargetRange )
 {
 	Assert( m_hContainer );
+
+	m_poseWeapon_Pitch = m_hContainer->LookupPoseParameter("weapon_pitch");
+	m_poseWeapon_Yaw = m_hContainer->LookupPoseParameter("weapon_yaw");	
 
 	// Get the desired aim vector
 	vecToTarget = GetEnemy()->WorldSpaceCenter( );
