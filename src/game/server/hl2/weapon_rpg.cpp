@@ -1383,6 +1383,7 @@ BEGIN_DATADESC( CWeaponRPG )
 	DEFINE_FIELD( m_hLaserMuzzleSprite, FIELD_EHANDLE ),
 	DEFINE_FIELD( m_hLaserBeam,			FIELD_EHANDLE ),
 	DEFINE_FIELD( m_bHideGuiding,		FIELD_BOOLEAN ),
+	DEFINE_FIELD( m_bAmmoHasBeenDepleted, FIELD_BOOLEAN),
 
 END_DATADESC()
 
@@ -1420,6 +1421,7 @@ CWeaponRPG::CWeaponRPG()
 	m_bInitialStateUpdate= false;
 	m_bHideGuiding = false;
 	m_bGuiding = false;
+	m_bAmmoHasBeenDepleted = true; // RPG is stored unloaded
 
 	m_fMinRange1 = m_fMinRange2 = 40*12;
 	m_fMaxRange1 = m_fMaxRange2 = 500*12;
@@ -1744,18 +1746,27 @@ bool CWeaponRPG::Lower( void )
 //-----------------------------------------------------------------------------
 void CWeaponRPG::ItemPostFrame( void )
 {
-	if (gpGlobals->curtime >= m_flNextPrimaryAttack)
+	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
+
+	if (pPlayer == NULL)
+		return;
+
+	if (!m_bAmmoHasBeenDepleted && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
+		m_bAmmoHasBeenDepleted = true;
+
+	if (m_bAmmoHasBeenDepleted)
+	{
+		Reload();
+		return;
+	}
+
+	if (m_bInReload && gpGlobals->curtime >= m_flNextPrimaryAttack)
 		m_bInReload = false;
 
 	if (!m_bInReload)
 		HoldIronsight();
 	
 	BaseClass::ItemPostFrame();
-
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-	
-	if ( pPlayer == NULL )
-		return;
 
 	//If we're pulling the weapon out for the first time, wait to draw the laser
 	if ( ( m_bInitialStateUpdate ) && ( GetActivity() != ACT_VM_DRAW ) )
@@ -2048,6 +2059,9 @@ bool CWeaponRPG::Reload( void )
 	WeaponSound( RELOAD );
 	DisableIronsights();
 	m_bInReload = true;
+
+	if (m_bAmmoHasBeenDepleted)
+		m_bAmmoHasBeenDepleted = false;
 
 	SendWeaponAnim( ACT_VM_RELOAD );
 

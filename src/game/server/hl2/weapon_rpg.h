@@ -247,6 +247,7 @@ protected:
 	bool				m_bInitialStateUpdate;
 	bool				m_bGuiding;
 	bool				m_bHideGuiding;		//User to override the player's wish to guide under certain circumstances
+	bool				m_bAmmoHasBeenDepleted; //if ammo amount had reached 0 and more ammo was picked up, reload
 	Vector				m_vecNPCLaserDot;
 	CHandle<CLaserDot>	m_hLaserDot;
 	CHandle<CMissile>	m_hMissile;
