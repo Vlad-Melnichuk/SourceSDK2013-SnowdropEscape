@@ -71,7 +71,7 @@ extern ConVar autoaim_max_dist;
 #define PLAYER_HULL_REDUCTION	0.70
 
 // This switches between the single primary weapon, and multiple weapons with buckets approach (jdw)
-#define	HL2_SINGLE_PRIMARY_WEAPON_MODE	1
+#define	HL2_SINGLE_PRIMARY_WEAPON_MODE	0
 
 #define TIME_IGNORE_FALL_DAMAGE 10.0
 
