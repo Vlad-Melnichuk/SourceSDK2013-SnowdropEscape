@@ -36,7 +36,7 @@ public:
 
 	void	PrimaryAttack( void );
 	void	SecondaryAttack(void);
-	bool	Reload( void );
+	virtual bool	Reload(void);
 	void	HoldIronsight(void);
 	void	Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
 	float	WeaponAutoAimScale()	{ return 0.6f; }
@@ -124,7 +124,7 @@ void CWeapon357::PrimaryAttack( void )
 		else
 		{
 			WeaponSound( EMPTY );
-			m_flNextPrimaryAttack = 0.15;
+			m_flNextPrimaryAttack = 0.1;
 		}
 
 		return;
@@ -138,7 +138,7 @@ void CWeapon357::PrimaryAttack( void )
 	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + 0.6f;
+	m_flNextPrimaryAttack = gpGlobals->curtime + 0.4f;
 	m_flNextSecondaryAttack = gpGlobals->curtime + 0.6f;
 
 	m_iClip1--;
@@ -200,11 +200,11 @@ void CWeapon357::ItemPostFrame(void)
 		return;
 	}
 
+
 	if (!m_bInReload && m_iClip1 > 0)
 	{
 			// Allow  Ironsight
 			HoldIronsight();
-
 			if ((pOwner->m_afButtonPressed & IN_ATTACK) && gpGlobals->curtime >= m_flNextPrimaryAttack) 
 			{
 				PrimaryAttack();
@@ -215,6 +215,12 @@ void CWeapon357::ItemPostFrame(void)
 			{
 				SecondaryAttack();
 			}
+
+			if ((pOwner->m_afButtonPressed & IN_RELOAD) && gpGlobals->curtime >= m_flNextPrimaryAttack)
+			{
+				Reload();
+			}
+
 	}
 	else
 		BaseClass::ItemPostFrame(); //reload
@@ -223,17 +229,28 @@ void CWeapon357::ItemPostFrame(void)
 bool CWeapon357::Reload(void)
 {
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
-
-	if (m_iClip1 < 1 && pPlayer)
+	pPlayer->ShowCrosshair(true); // show crosshair to fix crosshair for reloading weapons in toggle ironsight
+	if (pPlayer)
 	{
-		pPlayer->ShowCrosshair(true); // show crosshair to fix crosshair for reloading weapons in toggle ironsight
-		bool fRet = DefaultReload(GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD);
-	
-		if (fRet)
+		if (m_iClip1 < 1)
 		{
-			WeaponSound(RELOAD);
+			bool fRet = DefaultReload(GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD);
+			if (fRet)
+			{
+				WeaponSound(RELOAD);
+			}
+			return fRet;
 		}
-		return fRet;
+		else
+		{
+			bool fRet = DefaultReload(GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD_NOBOLD);
+			if (fRet)
+			{
+				WeaponSound(RELOAD);
+			}
+			return fRet;
+		}
+
 	}
 	else
 	{
