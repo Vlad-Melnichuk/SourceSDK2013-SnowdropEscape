@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		357 - hand gun
+// Purpose:		Semi-automatic rifle
 //
 // $NoKeywords: $
 //=============================================================================//
@@ -36,9 +36,8 @@ public:
 
 	void	PrimaryAttack( void );
 	void	SecondaryAttack(void);
-	bool	Reload( void );
+	virtual bool	Reload(void);
 	void	HoldIronsight(void);
-	void	Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
 	float	WeaponAutoAimScale()	{ return 0.6f; }
 	virtual void	ItemPostFrame(void);
 	bool Deploy(void);
@@ -66,33 +65,6 @@ CWeapon357::CWeapon357( void )
 	m_bFiresUnderwater	= false;
 }
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
-void CWeapon357::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
-{
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-
-	switch( pEvent->event )
-	{
-		case EVENT_WEAPON_RELOAD:
-			{
-				CEffectData data;
-
-				// Emit six spent shells
-				for ( int i = 0; i < 6; i++ )
-				{
-					data.m_vOrigin = pOwner->WorldSpaceCenter() + RandomVector( -4, 4 );
-					data.m_vAngles = QAngle( 90, random->RandomInt( 0, 360 ), 0 );
-					data.m_nEntIndex = entindex();
-
-					DispatchEffect( "ShellEject", data );
-				}
-
-				break;
-			}
-	}
-}
 bool CWeapon357::Deploy(void)
 {
 	Msg("SDE_SMG!_deploy\n");
@@ -124,7 +96,7 @@ void CWeapon357::PrimaryAttack( void )
 		else
 		{
 			WeaponSound( EMPTY );
-			m_flNextPrimaryAttack = 0.15;
+			m_flNextPrimaryAttack = gpGlobals->curtime + 0.1f;
 		}
 
 		return;
@@ -138,8 +110,8 @@ void CWeapon357::PrimaryAttack( void )
 	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
 	pPlayer->SetAnimation( PLAYER_ATTACK1 );
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + 0.6f;
-	m_flNextSecondaryAttack = gpGlobals->curtime + 0.6f;
+	m_flNextPrimaryAttack = gpGlobals->curtime + 0.4f;
+	m_flNextSecondaryAttack = gpGlobals->curtime + 0.4f;
 
 	m_iClip1--;
 
@@ -192,48 +164,33 @@ void CWeapon357::HoldIronsight(void)
 	}
 }
 
-void CWeapon357::ItemPostFrame(void)
-{
-	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
-	if (!pOwner)
-	{
-		return;
-	}
-
-	if (!m_bInReload && m_iClip1 > 0)
-	{
-			// Allow  Ironsight
-			HoldIronsight();
-
-			if ((pOwner->m_afButtonPressed & IN_ATTACK) && gpGlobals->curtime >= m_flNextPrimaryAttack) 
-			{
-				PrimaryAttack();
-			}
-
-			if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
-			// toggle zoom on rifle like vanilla HL2 crossbow
-			{
-				SecondaryAttack();
-			}
-	}
-	else
-		BaseClass::ItemPostFrame(); //reload
-}
-
 bool CWeapon357::Reload(void)
 {
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
 
-	if (m_iClip1 < 1 && pPlayer)
+	if (pPlayer)
 	{
 		pPlayer->ShowCrosshair(true); // show crosshair to fix crosshair for reloading weapons in toggle ironsight
-		bool fRet = DefaultReload(GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD);
-	
-		if (fRet)
+
+		if (m_iClip1 < 1)
 		{
-			WeaponSound(RELOAD);
+			bool fRet = DefaultReload(GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD);
+			if (fRet)
+			{
+				WeaponSound(RELOAD);
+			}
+			return fRet;
 		}
-		return fRet;
+		else
+		{
+			bool fRet = DefaultReload(GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD_NOBOLD);
+			if (fRet)
+			{
+				WeaponSound(RELOAD);
+			}
+			return fRet;
+		}
+
 	}
 	else
 	{
@@ -252,4 +209,37 @@ void CWeapon357::SecondaryAttack(void)
 
 	ToggleIronsights();
 	pOwner->ToggleCrosshair();
+}
+
+void CWeapon357::ItemPostFrame(void)
+{
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if (!pOwner)
+	{
+		return;
+	}
+
+	if (!m_bInReload && m_iClip1 > 0)
+	{
+		// Allow  Ironsight
+		HoldIronsight();
+		if ((pOwner->m_afButtonPressed & IN_ATTACK) && gpGlobals->curtime >= m_flNextPrimaryAttack)
+		{
+			PrimaryAttack();
+		}
+
+		if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
+			// toggle zoom on rifle like vanilla HL2 crossbow
+		{
+			SecondaryAttack();
+		}
+
+		if ((pOwner->m_afButtonPressed & IN_RELOAD) && gpGlobals->curtime >= m_flNextPrimaryAttack)
+		{
+			Reload();
+		}
+
+	}
+	else
+		BaseClass::ItemPostFrame(); //reload
 }
