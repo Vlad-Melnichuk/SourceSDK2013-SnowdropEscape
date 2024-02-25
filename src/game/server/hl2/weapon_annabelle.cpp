@@ -214,9 +214,11 @@ bool CWeaponAnnabelle::Reload(void)
 
 	DevMsg("SDE m1garand debug: reloading \n");
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
-	pPlayer->ShowCrosshair(true); // show crosshair to fix crosshair for reloading weapons in toggle ironsight
+
 	if (pPlayer)
 	{
+		pPlayer->ShowCrosshair(true); // show crosshair to fix crosshair for reloading weapons in toggle ironsight
+
 		if (m_iClip1 < 1)
 		{
 			bool fRet = DefaultReload(GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD);
@@ -428,7 +430,7 @@ void CWeaponAnnabelle::PrimaryAttack(void)
 		else
 		{
 			WeaponSound(EMPTY);
-			m_flNextPrimaryAttack = 0.10;
+			m_flNextPrimaryAttack = gpGlobals->curtime + 0.1f;
 		}
 
 		return;
@@ -442,8 +444,8 @@ void CWeaponAnnabelle::PrimaryAttack(void)
 	SendWeaponAnim(ACT_VM_PRIMARYATTACK);
 	pPlayer->SetAnimation(PLAYER_ATTACK1);
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + 0.6f;
-	m_flNextSecondaryAttack = gpGlobals->curtime + 0.6f;
+	m_flNextPrimaryAttack = gpGlobals->curtime + 0.4f;
+	m_flNextSecondaryAttack = gpGlobals->curtime + 0.4f;
 
 	m_iClip1--;
 
