@@ -167,9 +167,11 @@ void CWeapon357::HoldIronsight(void)
 bool CWeapon357::Reload(void)
 {
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
-	pPlayer->ShowCrosshair(true); // show crosshair to fix crosshair for reloading weapons in toggle ironsight
+
 	if (pPlayer)
 	{
+		pPlayer->ShowCrosshair(true); // show crosshair to fix crosshair for reloading weapons in toggle ironsight
+
 		if (m_iClip1 < 1)
 		{
 			bool fRet = DefaultReload(GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD);
