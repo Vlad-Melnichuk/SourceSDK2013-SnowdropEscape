@@ -273,7 +273,11 @@ bool CWeaponShotgun::Deploy(void)
 	Msg("SDE_SMG!_deploy\n");
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
 	if (pPlayer)
+	{
 		pPlayer->ShowCrosshair(true);
+		if (m_bBoltRequired && m_iClip1)
+			m_bBoltRequired = false;
+	}
 	return BaseClass::Deploy();
 }
 //-----------------------------------------------------------------------------
