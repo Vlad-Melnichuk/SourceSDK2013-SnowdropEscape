@@ -2874,16 +2874,16 @@ DEFINE_PRED_FIELD(m_iPrimaryAmmoType, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 DEFINE_PRED_FIELD(m_iSecondaryAmmoType, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 DEFINE_PRED_FIELD(m_iClip1, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 DEFINE_PRED_FIELD(m_iClip2, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
+DEFINE_PRED_FIELD(m_flTimeWeaponIdle, FIELD_FLOAT, FTYPEDESC_INSENDTABLE),
 //added
 DEFINE_PRED_FIELD( m_bIsIronsighted, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
 DEFINE_PRED_FIELD( m_flIronsightedTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
-DEFINE_PRED_FIELD( m_bBoltRequired, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
 
 DEFINE_PRED_FIELD(m_nViewModelIndex, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 
 // Not networked
 
-DEFINE_PRED_FIELD(m_flTimeWeaponIdle, FIELD_FLOAT, FTYPEDESC_INSENDTABLE),
+
 DEFINE_FIELD(m_bInReload, FIELD_BOOLEAN),
 DEFINE_FIELD(m_bInSecondaryReload, FIELD_BOOLEAN),
 DEFINE_FIELD(m_bFireOnEmpty, FIELD_BOOLEAN),
@@ -3149,7 +3149,6 @@ SendPropInt(SENDINFO(m_iState), 8, SPROP_UNSIGNED),
 SendPropEHandle(SENDINFO(m_hOwner)),
 SendPropBool( SENDINFO( m_bIsIronsighted ) ),
 SendPropFloat( SENDINFO( m_flIronsightedTime ) ),
-SendPropBool(SENDINFO(m_bBoltRequired)),
 #else
 RecvPropDataTable("LocalWeaponData", 0, 0, &REFERENCE_RECV_TABLE(DT_LocalWeaponData)),
 RecvPropDataTable("LocalActiveWeaponData", 0, 0, &REFERENCE_RECV_TABLE(DT_LocalActiveWeaponData)),
@@ -3159,6 +3158,5 @@ RecvPropInt(RECVINFO(m_iState)),
 RecvPropEHandle(RECVINFO(m_hOwner)),
 RecvPropInt(RECVINFO(m_bIsIronsighted), 0, RecvProxy_ToggleSights), //note: RecvPropBool is actually RecvPropInt (see its implementation), but we need a proxy
 RecvPropFloat(RECVINFO(m_flIronsightedTime)),
-RecvPropBool(RECVINFO(m_bBoltRequired)),
 #endif
 END_NETWORK_TABLE()

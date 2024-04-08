@@ -37,6 +37,7 @@ private:
 	bool	m_bNeedPump;		// When emptied completely
 	bool	m_bDelayedFire1;	// Fire primary when finished reloading
 	bool	m_bDelayedFire2;	// Fire secondary when finished reloading
+	float	m_flReloadEnd;	// when all animations on ending the reload actually end
 
 public:
 	void	Precache( void );
@@ -101,6 +102,7 @@ BEGIN_DATADESC( CWeaponShotgun )
 	DEFINE_FIELD( m_bNeedPump, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bDelayedFire1, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bDelayedFire2, FIELD_BOOLEAN ),
+	DEFINE_FIELD( m_flReloadEnd, FIELD_TIME),
 
 END_DATADESC()
 
@@ -278,6 +280,12 @@ bool CWeaponShotgun::Deploy(void)
 		if (m_bBoltRequired && m_iClip1)
 			m_bBoltRequired = false;
 	}
+
+	/*bool return_value;
+	return_value = BaseClass::Deploy();
+	m_flReloadEnd = gpGlobals->curtime + SequenceDuration();
+	m_bInReload = true;
+	return return_value;*/
 	return BaseClass::Deploy();
 }
 //-----------------------------------------------------------------------------
@@ -325,6 +333,7 @@ bool CWeaponShotgun::StartReload( void )
 
 	pOwner->m_flNextAttack = gpGlobals->curtime;
 	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
+	m_flReloadEnd = m_flNextPrimaryAttack + 0.1f; // moved a little past primary attack
 
 	m_bInReload = true;
 	return true;
@@ -370,6 +379,7 @@ bool CWeaponShotgun::Reload( void )
 
 	pOwner->m_flNextAttack = gpGlobals->curtime;
 	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
+	m_flReloadEnd = m_flNextPrimaryAttack + 0.1f; // moved a little past primary attack
 
 	return true;
 }
@@ -393,7 +403,7 @@ void CWeaponShotgun::FinishReload( void )
 	{
 		//Pump();
 		SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH);
-		m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+		m_flNextPrimaryAttack = m_flNextSecondaryAttack = m_flReloadEnd = gpGlobals->curtime + SequenceDuration();
 		m_bBoltRequired = false;	
 	}
 
@@ -402,10 +412,8 @@ void CWeaponShotgun::FinishReload( void )
 		m_bNeedPump = false;
 		SendWeaponAnim(ACT_VM_RELOAD_NOBOLD);
 		pOwner->m_flNextAttack = gpGlobals->curtime;
-		m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
+		m_flNextPrimaryAttack = m_flNextSecondaryAttack = m_flReloadEnd = gpGlobals->curtime + SequenceDuration();
 	}
-
-	m_bInReload = false;
 
 	//SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH);
 
@@ -488,10 +496,9 @@ void CWeaponShotgun::PrimaryAttack( void )
 	if (m_bBoltRequired && m_iClip1 > 0) // if reloading from the empty magazine, interrupt loading and chamber a round
 	{
 		SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH);
-		m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+		m_flNextPrimaryAttack = m_flNextSecondaryAttack = m_flReloadEnd = gpGlobals->curtime + SequenceDuration();
 		//Pump();
 		m_bBoltRequired = false;
-		m_bInReload = false;
 		return;
 	}
 
@@ -564,10 +571,9 @@ void CWeaponShotgun::SecondaryAttack( void )
 	if (m_bBoltRequired && m_iClip1 > 0) // if reloading from the empty magazine, interrupt loading and chamber a round
 	{
 		SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH);
-		m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + SequenceDuration();
+		m_flNextPrimaryAttack = m_flNextSecondaryAttack = m_flReloadEnd = gpGlobals->curtime + SequenceDuration();
 		//Pump();
 		m_bBoltRequired = false;
-		m_bInReload = false;
 		return;
 	}
 	//// Only the player fires this way so we can cast
@@ -575,6 +581,7 @@ void CWeaponShotgun::SecondaryAttack( void )
 	//
 	//if (!pPlayer)
 	{
+		m_flReloadEnd = gpGlobals->curtime;
 		return;
 	}
 	//
@@ -636,21 +643,24 @@ void CWeaponShotgun::ItemPostFrame( void )
 	DisplaySDEHudHint(); //added
 	if (m_bInReload)
 	{
+		if (m_flReloadEnd <= gpGlobals->curtime)
+		{
+			m_bInReload = false; // moved here to not happen before chamber close animation finishes
+			return;
+		}
 		// If I'm primary firing and have one round stop reloading and fire
 		if ((pOwner->m_nButtons & IN_ATTACK ) && (m_iClip1 >=1))
 		{
-			m_bInReload		= false;
 			m_bNeedPump		= false;
 			m_bDelayedFire1 = true;
 		}
 		// If I'm secondary firing and have one round stop reloading and fire
 		else if ((pOwner->m_nButtons & IN_ATTACK2 ) && (m_iClip1 >=1))
 		{
-			m_bInReload		= false;
 			m_bNeedPump		= false;
 			m_bDelayedFire2 = true;
 		}
-		else if (m_flNextPrimaryAttack <= gpGlobals->curtime)
+		else if (!(m_bDelayedFire1 || m_bDelayedFire2) && m_flNextPrimaryAttack <= gpGlobals->curtime)
 		{
 			// If out of ammo end reload
 			if (pOwner->GetAmmoCount(m_iPrimaryAmmoType) <=0)
@@ -685,10 +695,11 @@ void CWeaponShotgun::ItemPostFrame( void )
 	}
 	
 	// Shotgun uses same timing and ammo for secondary attack
-	if ((m_bDelayedFire2 || pOwner->m_nButtons & IN_ATTACK2)&&(m_flNextPrimaryAttack <= gpGlobals->curtime))
+	if ((m_bDelayedFire2 || pOwner->m_nButtons & IN_ATTACK2) && (m_flNextPrimaryAttack <= gpGlobals->curtime))
 	{
 		m_bDelayedFire2 = false;
-		
+		m_bDelayedFire1 = false; // in case a different attack click happened very soon after interrupting reload
+
 		if ( (m_iClip1 <= 0 && UsesClipsForAmmo1()))
 		{
 			// If only one shell is left, do a single shot instead - irrelevant for SDE
@@ -716,7 +727,7 @@ void CWeaponShotgun::ItemPostFrame( void )
 		else
 		{
 			// If the firing button was just pressed, reset the firing time
-			if ( pOwner->m_afButtonPressed & IN_ATTACK )
+			if ( pOwner->m_afButtonPressed & IN_ATTACK2 )
 			{
 				 m_flNextPrimaryAttack = gpGlobals->curtime;
 			}
@@ -726,6 +737,8 @@ void CWeaponShotgun::ItemPostFrame( void )
 	else if ( (m_bDelayedFire1 || pOwner->m_nButtons & IN_ATTACK) && m_flNextPrimaryAttack <= gpGlobals->curtime)
 	{
 		m_bDelayedFire1 = false;
+		m_bDelayedFire2 = false; // in case a different attack click happened very soon after interrupting reload
+
 		if ( (m_iClip1 <= 0 && UsesClipsForAmmo1()) || ( !UsesClipsForAmmo1() && !pOwner->GetAmmoCount(m_iPrimaryAmmoType) ) )
 		{
 			if (!pOwner->GetAmmoCount(m_iPrimaryAmmoType))
