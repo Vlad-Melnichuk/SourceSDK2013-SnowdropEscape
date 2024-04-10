@@ -638,7 +638,7 @@ void CWeaponShotgun::ItemPostFrame( void )
 
 	DisplaySDEHudHint(); //added
 
-	if (m_iClip1 < 1)
+	if (!m_bBoltRequired && m_iClip1 < 1)
 		m_bBoltRequired = true;
 
 	if (m_bInReload)
