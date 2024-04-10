@@ -277,16 +277,23 @@ bool CWeaponShotgun::Deploy(void)
 	if (pPlayer)
 	{
 		pPlayer->ShowCrosshair(true);
-		if (m_bBoltRequired && m_iClip1)
-			m_bBoltRequired = false;
 	}
 
-	/*bool return_value;
+	if (m_bBoltRequired && m_iClip1)
+		m_bBoltRequired = false;
+
+	bool return_value;
+	
 	return_value = BaseClass::Deploy();
-	m_flReloadEnd = gpGlobals->curtime + SequenceDuration();
-	m_bInReload = true;
-	return return_value;*/
-	return BaseClass::Deploy();
+	
+	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType))
+		m_flReloadEnd = gpGlobals->curtime + SequenceDuration() + 0.1f; // a little past deploy animation as reloading will follow
+	else
+		m_flReloadEnd = gpGlobals->curtime + SequenceDuration();
+
+	m_bInReload = true; // to suppress toggle ironsight in deploy bolting animation
+	
+	return return_value;
 }
 //-----------------------------------------------------------------------------
 // Purpose: Override so only reload one shell at a time
@@ -311,10 +318,10 @@ bool CWeaponShotgun::StartReload( void )
 	//NOTENOTE: This is kinda lame because the player doesn't get strong feedback on when the reload has finished,
 	//			without the pump.  Technically, it's incorrect, but it's good for feedback...
 
-	if (m_iClip1 <= 0)
+	/*if (m_iClip1 <= 0)
 	{
 		m_bNeedPump = true;
-	}
+	}*/
 
 	int j = MIN(1, pOwner->GetAmmoCount(m_iPrimaryAmmoType));
 
@@ -325,11 +332,6 @@ bool CWeaponShotgun::StartReload( void )
 
 	// Make shotgun shell visible
 	SetBodygroup(1,0);
-
-	if (m_iClip1 < 1)
-	{
-		m_bBoltRequired = true;
-	}
 
 	pOwner->m_flNextAttack = gpGlobals->curtime;
 	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
@@ -568,22 +570,15 @@ void CWeaponShotgun::HoldIronsight(void)
 //-----------------------------------------------------------------------------
 void CWeaponShotgun::SecondaryAttack( void )
 {
-	if (m_bBoltRequired && m_iClip1 > 0) // if reloading from the empty magazine, interrupt loading and chamber a round
+	if (m_bInReload && m_iClip1 > 0)
 	{
-		SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH);
-		m_flNextPrimaryAttack = m_flNextSecondaryAttack = m_flReloadEnd = gpGlobals->curtime + SequenceDuration();
-		//Pump();
-		m_bBoltRequired = false;
-		return;
+		FinishReload();
 	}
 	//// Only the player fires this way so we can cast
 	//CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 	//
 	//if (!pPlayer)
-	{
-		m_flReloadEnd = gpGlobals->curtime;
-		return;
-	}
+	//	return;
 	//
 	//pPlayer->m_nButtons &= ~IN_ATTACK2;
 	//// MUST call sound before removing a round from the clip of a CMachineGun
@@ -632,20 +627,25 @@ void CWeaponShotgun::SecondaryAttack( void )
 //-----------------------------------------------------------------------------
 void CWeaponShotgun::ItemPostFrame( void )
 {
-	if (!m_bInReload)
-		HoldIronsight();
-
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
 	if (!pOwner)
 	{
 		return;
 	}
+
+	if (!m_bInReload)
+		HoldIronsight();
+
 	DisplaySDEHudHint(); //added
+
+	if (m_iClip1 < 1)
+		m_bBoltRequired = true;
+
 	if (m_bInReload)
 	{
 		if (m_flReloadEnd <= gpGlobals->curtime)
 		{
-			m_bInReload = false; // moved here to not happen before chamber close animation finishes
+			m_bInReload = false; // moved here to not happen before loading animations finish
 			return;
 		}
 		// If I'm primary firing and have one round stop reloading and fire
