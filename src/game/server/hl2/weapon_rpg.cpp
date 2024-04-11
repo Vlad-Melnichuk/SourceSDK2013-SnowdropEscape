@@ -1384,6 +1384,7 @@ BEGIN_DATADESC( CWeaponRPG )
 	DEFINE_FIELD( m_hLaserBeam,			FIELD_EHANDLE ),
 	DEFINE_FIELD( m_bHideGuiding,		FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bAmmoHasBeenDepleted, FIELD_BOOLEAN),
+	DEFINE_FIELD( m_bJustFiredWaitForReload, FIELD_BOOLEAN),
 
 END_DATADESC()
 
@@ -1422,6 +1423,7 @@ CWeaponRPG::CWeaponRPG()
 	m_bHideGuiding = false;
 	m_bGuiding = false;
 	m_bAmmoHasBeenDepleted = true; // RPG is stored unloaded
+	m_bJustFiredWaitForReload = false;
 
 	m_fMinRange1 = m_fMinRange2 = 40*12;
 	m_fMaxRange1 = m_fMaxRange2 = 500*12;
@@ -1601,7 +1603,7 @@ void CWeaponRPG::PrimaryAttack( void )
 	Vector vecOrigin;
 	Vector vecForward;
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + 0.5f;
+	// m_flNextPrimaryAttack = gpGlobals->curtime + 0.5f;
 
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 	
@@ -1635,6 +1637,18 @@ void CWeaponRPG::PrimaryAttack( void )
 	pOwner->SetMuzzleFlashTime( gpGlobals->curtime + 0.5 );
 
 	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+	
+	if (pOwner->GetAmmoCount(m_iPrimaryAmmoType))
+	{
+		m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration() + 0.1f;
+		m_bJustFiredWaitForReload = true;
+		m_bInReload = true;
+	}
+	else
+		m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
+	
+	DisableIronsights();
+
 	WeaponSound( SINGLE );
 
 	pOwner->RumbleEffect( RUMBLE_SHOTGUN_SINGLE, 0, RUMBLE_FLAG_RESTART );
@@ -1643,7 +1657,7 @@ void CWeaponRPG::PrimaryAttack( void )
 	gamestats->Event_WeaponFired( pOwner, true, GetClassname() );
 
 	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), 1000, 0.2, GetOwner(), SOUNDENT_CHANNEL_WEAPON );
-	NotifyRocketDied();
+	// NotifyRocketDied(); // trigger reload only after the shot animation completes
 
 	// Check to see if we should trigger any RPG firing triggers
 	int iCount = g_hWeaponFireTriggers.Count();
@@ -1765,6 +1779,12 @@ void CWeaponRPG::ItemPostFrame( void )
 	if (!m_bInReload)
 		HoldIronsight();
 	
+	if (m_bJustFiredWaitForReload && gpGlobals->curtime >= m_flNextPrimaryAttack)
+	{
+		m_bJustFiredWaitForReload = false;
+		NotifyRocketDied();
+	}
+
 	BaseClass::ItemPostFrame();
 
 	//If we're pulling the weapon out for the first time, wait to draw the laser
