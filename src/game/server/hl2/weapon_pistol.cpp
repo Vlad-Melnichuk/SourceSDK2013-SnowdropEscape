@@ -186,7 +186,14 @@ bool CWeaponPistol::Deploy(void)
 	if (pPlayer)
 		pPlayer->ShowCrosshair(true);
 	DisplaySDEHudHint();
-	return BaseClass::Deploy();
+
+	bool return_value = BaseClass::Deploy();
+
+	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration(); // next primary attack when deploy animation ends
+
+	m_bForbidIronsight = true; // to suppress ironsight during deploy as the weapon is bolted. Behavior of ironsightable weapons that DO bolt on deploy
+
+	return return_value;
 }
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -314,8 +321,20 @@ void CWeaponPistol::ItemBusyFrame( void )
 //-----------------------------------------------------------------------------
 void CWeaponPistol::ItemPostFrame( void )
 {
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
 
-	if (!m_bInReload)
+	if (pOwner == NULL)
+		return;
+
+	if (m_bForbidIronsight && gpGlobals->curtime >= m_flNextPrimaryAttack)
+	{
+		m_bForbidIronsight = false;
+		if (!m_iClip1 && pOwner->GetAmmoCount(m_iPrimaryAmmoType))
+			Reload();
+	}
+
+	// Ironsight if not reloading or deploying
+	if (!(m_bInReload || m_bForbidIronsight))
 		HoldIronsight();
 
 	BaseClass::ItemPostFrame();
@@ -323,11 +342,6 @@ void CWeaponPistol::ItemPostFrame( void )
 	if ( m_bInReload )
 		return;
 	
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-
-	if ( pOwner == NULL )
-		return;
-
 	//Allow a refire as fast as the player can click
 	if ( ( ( pOwner->m_nButtons & IN_ATTACK ) == false ) && ( m_flSoonestPrimaryAttack < gpGlobals->curtime ) )
 	{

@@ -52,6 +52,7 @@ public:
 
 	virtual void Equip( CBaseCombatCharacter *pOwner );
 	bool	Reload( void );
+	bool	Deploy(void);
 
 	float	GetFireRate( void ) { return 0.075f; }	// 13.3hz
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
@@ -198,6 +199,25 @@ void CWeaponSMG1::Equip( CBaseCombatCharacter *pOwner )
 
 	BaseClass::Equip( pOwner );
 }
+
+bool CWeaponSMG1::Deploy(void)
+{
+	m_nShotsFired = 0;
+	Msg("SDE_SMG!_deploy\n");
+	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
+	if (pPlayer)
+		pPlayer->ShowCrosshair(true);
+	DisplaySDEHudHint();
+
+	bool return_value = BaseClass::Deploy();
+
+	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration(); // next primary attack when deploy animation ends
+
+	m_bForbidIronsight = true; // to suppress ironsight during deploy as the weapon is bolted. Behavior of ironsightable weapons that DO bolt on deploy
+
+	return return_value;
+}
+
 //added
 ConVar sde_pickup_smg1("sde_pickup_smg1", "0");
 void CWeaponSMG1::PickupAnim(void)
@@ -241,6 +261,13 @@ void CWeaponSMG1::ItemPostFrame(void)
 	if (pOwner == NULL)
 		return;
 
+	if (m_bForbidIronsight && gpGlobals->curtime >= m_flNextPrimaryAttack)
+	{
+		m_bForbidIronsight = false;
+		if (!m_iClip1 && pOwner->GetAmmoCount(m_iPrimaryAmmoType))
+			Reload();
+	}
+
 	if (gpGlobals->curtime >= m_flSecondaryReloadActivationTime)
 	{
 		m_bInSecondaryReload = true;
@@ -251,8 +278,8 @@ void CWeaponSMG1::ItemPostFrame(void)
 		m_bInSecondaryReload = false;
 	}
 
-	// Ironsight if not reloading
-	if (!(m_bInReload || m_bInSecondaryReload))
+	// Ironsight if not reloading or deploying
+	if (!(m_bInReload || m_bInSecondaryReload || m_bForbidIronsight))
 		HoldIronsight();
 
 	// Debounce the recoiling counter
