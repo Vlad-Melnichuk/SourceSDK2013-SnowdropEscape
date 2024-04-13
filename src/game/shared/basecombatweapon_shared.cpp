@@ -156,6 +156,7 @@ CBaseCombatWeapon::CBaseCombatWeapon()
 	m_bIsIronsighted = false;
 	m_flIronsightedTime = 0.0f;
 	m_bBoltRequired = false;
+	m_bForbidIronsight = false;
 
 #if defined( CLIENT_DLL )
 	m_iState = m_iOldState = WEAPON_NOT_CARRIED;
@@ -1584,6 +1585,7 @@ bool CBaseCombatWeapon::Holster(CBaseCombatWeapon *pSwitchingTo)
 	// cancel any reload in progress.
 	m_bInReload = false;
 	m_bInSecondaryReload = false;
+	m_bForbidIronsight = false;
 	m_bFiringWholeClip = false;
 
 	// kill any think functions
@@ -2906,6 +2908,7 @@ DEFINE_FIELD(m_iSecondaryAmmoCount, FIELD_INTEGER),
 DEFINE_FIELD( m_bIsIronsighted, FIELD_BOOLEAN ),
 DEFINE_FIELD( m_flIronsightedTime, FIELD_FLOAT ),
 DEFINE_FIELD( m_bBoltRequired, FIELD_BOOLEAN ),
+DEFINE_FIELD( m_bForbidIronsight, FIELD_BOOLEAN ),
 
 //DEFINE_PHYSPTR( m_pConstraint ),
 
@@ -2938,7 +2941,7 @@ DEFINE_FIELD(m_bFireOnEmpty, FIELD_BOOLEAN),
 DEFINE_FIELD(m_hOwner, FIELD_EHANDLE),
 
 DEFINE_FIELD(m_bBoltRequired, FIELD_BOOLEAN),
-
+DEFINE_FIELD(m_bForbidIronsight, FIELD_BOOLEAN),
 DEFINE_FIELD(m_iState, FIELD_INTEGER),
 DEFINE_FIELD(m_iszName, FIELD_STRING),
 DEFINE_FIELD(m_iPrimaryAmmoType, FIELD_INTEGER),

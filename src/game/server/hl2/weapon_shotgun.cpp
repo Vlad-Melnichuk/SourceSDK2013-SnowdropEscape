@@ -282,9 +282,7 @@ bool CWeaponShotgun::Deploy(void)
 	if (m_bBoltRequired && m_iClip1)
 		m_bBoltRequired = false;
 
-	bool return_value;
-	
-	return_value = BaseClass::Deploy();
+	bool return_value = BaseClass::Deploy();
 	
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType))
 		m_flReloadEnd = gpGlobals->curtime + SequenceDuration() + 0.1f; // a little past deploy animation as reloading will follow

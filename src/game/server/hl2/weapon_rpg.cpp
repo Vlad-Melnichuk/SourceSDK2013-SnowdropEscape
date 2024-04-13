@@ -1892,9 +1892,7 @@ bool CWeaponRPG::Deploy( void )
 	if (pPlayer)
 		pPlayer->ShowCrosshair(true);
 
-	bool return_value;
-
-	return_value = BaseClass::Deploy();
+	bool return_value = BaseClass::Deploy();
 
 	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration(); // next primary attack when deploy animation ends
 
