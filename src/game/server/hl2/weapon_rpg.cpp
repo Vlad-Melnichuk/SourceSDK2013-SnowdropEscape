@@ -1637,16 +1637,16 @@ void CWeaponRPG::PrimaryAttack( void )
 	pOwner->SetMuzzleFlashTime( gpGlobals->curtime + 0.5 );
 
 	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+
+	m_bInReload = true;
+
+	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
 	
 	if (pOwner->GetAmmoCount(m_iPrimaryAmmoType))
 	{
-		m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration() + 0.1f;
 		m_bJustFiredWaitForReload = true;
-		m_bInReload = true;
 	}
-	else
-		m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
-	
+
 	DisableIronsights();
 
 	WeaponSound( SINGLE );
@@ -1773,19 +1773,19 @@ void CWeaponRPG::ItemPostFrame( void )
 		Reload();
 	}
 
-	if (m_bInReload && gpGlobals->curtime >= m_flNextPrimaryAttack)
-		m_bInReload = false;
-
-	if (!m_bInReload)
-		HoldIronsight();
-	
 	if (m_bJustFiredWaitForReload && gpGlobals->curtime >= m_flNextPrimaryAttack)
 	{
 		m_bJustFiredWaitForReload = false;
 		NotifyRocketDied();
 	}
 
-	BaseClass::ItemPostFrame();
+	BaseClass::ItemPostFrame(); // triggers reload after NotifyRocketDied()
+
+	if (m_bInReload && gpGlobals->curtime >= m_flNextPrimaryAttack)
+		m_bInReload = false;
+
+	if (!m_bInReload)
+		HoldIronsight();
 
 	//If we're pulling the weapon out for the first time, wait to draw the laser
 	if ( ( m_bInitialStateUpdate ) && ( GetActivity() != ACT_VM_DRAW ) )
@@ -1896,13 +1896,12 @@ bool CWeaponRPG::Deploy( void )
 
 	return_value = BaseClass::Deploy();
 
+	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration(); // next primary attack when deploy animation ends
+
 	if (m_bAmmoHasBeenDepleted && pPlayer->GetAmmoCount(m_iPrimaryAmmoType))
 	{
-		m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration() + 0.1f; // a little past deploy animation as reloading will follow
 		m_bInReload = true; // to suppress ironsight before the rocket launcher is reloaded
 	}
-	else
-		m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
 
 	return return_value;
 }
