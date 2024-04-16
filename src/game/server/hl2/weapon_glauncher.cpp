@@ -529,7 +529,7 @@ VectorScale(vecThrow, 1800.0f, vecThrow);
 QAngle angles;
 VectorAngles(vecThrow, angles);
 CGrenadeAR2 *pGrenade = (CGrenadeAR2*)Create("grenade_ar2", vecSrc, angles, pPlayer);
-pGrenade->SetModel("models/items/ar3_grenade_noshell.mdl");
+pGrenade->SetModel("models/weapons/ar3_grenade_noshell.mdl");
 pGrenade->SetAbsVelocity(vecThrow);
 
 //pGrenade->SetLocalAngularVelocity( RandomAngle( -400, 400 ) );

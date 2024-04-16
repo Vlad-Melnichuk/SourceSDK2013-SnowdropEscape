@@ -178,7 +178,7 @@ CWeaponSMG1::CWeaponSMG1( )
 void CWeaponSMG1::Precache( void )
 {
 	UTIL_PrecacheOther("grenade_ar2");
-	PrecacheModel("models/items/ar3_grenade_shell.mdl");
+	PrecacheModel("models/weapons/ar3_grenade_shell.mdl");
 
 	BaseClass::Precache();
 }
@@ -580,7 +580,7 @@ void CWeaponSMG1::SecondaryAttack( void )
 	QAngle angles;
 	VectorAngles( vecThrow, angles );
 	CGrenadeAR2 *pGrenade = (CGrenadeAR2*)Create( "grenade_ar2", vecSrc, angles, pPlayer );
-	pGrenade->SetModel("models/items/ar3_grenade_noshell.mdl");
+	pGrenade->SetModel("models/weapons/ar3_grenade_noshell.mdl");
 	pGrenade->SetAbsVelocity( vecThrow );
 
 	//pGrenade->SetLocalAngularVelocity( RandomAngle( -400, 400 ) );
@@ -898,7 +898,7 @@ void CWeaponSMG1::GrenadeShellEject(void)
 			QAngle vecAngles(0, pPlayer->GetAbsAngles().y - 0.5, 0);
 			pEjectProp->SetAbsOrigin(vecOrigin);
 			pEjectProp->SetAbsAngles(vecAngles);
-			pEjectProp->KeyValue("model", "models/items/ar3_grenade_shell.mdl");
+			pEjectProp->KeyValue("model", "models/weapons/ar3_grenade_shell.mdl");
 			pEjectProp->KeyValue("solid", "1");
 			pEjectProp->KeyValue("targetname", "EjectProp");
 			pEjectProp->KeyValue("spawnflags", "260");
