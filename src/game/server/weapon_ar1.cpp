@@ -197,8 +197,6 @@ bool CWeaponar1::Deploy(void)
 
 	bool return_value = BaseClass::Deploy();
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration(); // next primary attack when deploy animation ends
-
 	m_bForbidIronsight = true; // to suppress ironsight during deploy as the weapon is bolted. Behavior of ironsightable weapons that DO bolt on deploy
 
 	return return_value;

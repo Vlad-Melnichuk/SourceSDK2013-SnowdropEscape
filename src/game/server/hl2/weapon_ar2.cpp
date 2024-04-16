@@ -145,8 +145,6 @@ bool CWeaponAR2::Deploy(void)
 
 	return_value = BaseClass::Deploy();
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration(); // next primary attack when deploy animation ends
-
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType))
 	{
 		m_bForbidIronsight = true; // to suppress ironsight during deploy in case the weapon is empty and the player has ammo 

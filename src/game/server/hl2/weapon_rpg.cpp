@@ -1894,8 +1894,6 @@ bool CWeaponRPG::Deploy( void )
 
 	bool return_value = BaseClass::Deploy();
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration(); // next primary attack when deploy animation ends
-
 	if (m_bAmmoHasBeenDepleted && pPlayer->GetAmmoCount(m_iPrimaryAmmoType))
 	{
 		m_bInReload = true; // to suppress ironsight before the rocket launcher is reloaded
