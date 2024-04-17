@@ -140,14 +140,27 @@ bool CWeaponAR2::Deploy(void)
 	if (pPlayer)
 		pPlayer->ShowCrosshair(true);
 	DisplaySDEHudHint();
-	return BaseClass::Deploy();
+
+	bool return_value;
+
+	return_value = BaseClass::Deploy();
+
+	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType))
+	{
+		m_bForbidIronsight = true; // to suppress ironsight during deploy in case the weapon is empty and the player has ammo 
+	}							   // -> reload will be forced. Behavior of ironsightable weapons that don't bolt on deploy
+
+	return return_value;
 }
 void CWeaponAR2::ItemPostFrame(void)
 {
+	if (m_bForbidIronsight && gpGlobals->curtime >= m_flNextPrimaryAttack)
+		m_bForbidIronsight = false;
 
 	// Ironsight declare
-	if (!m_bInReload)
+	if (!(m_bInReload || m_bForbidIronsight))
 		HoldIronsight();
+
 	// See if we need to fire off our secondary round
 	if (m_bShotDelayed && gpGlobals->curtime > m_flDelayedFire)
 	{

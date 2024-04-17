@@ -1384,6 +1384,7 @@ BEGIN_DATADESC( CWeaponRPG )
 	DEFINE_FIELD( m_hLaserBeam,			FIELD_EHANDLE ),
 	DEFINE_FIELD( m_bHideGuiding,		FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bAmmoHasBeenDepleted, FIELD_BOOLEAN),
+	DEFINE_FIELD( m_bJustFiredWaitForReload, FIELD_BOOLEAN),
 
 END_DATADESC()
 
@@ -1422,6 +1423,7 @@ CWeaponRPG::CWeaponRPG()
 	m_bHideGuiding = false;
 	m_bGuiding = false;
 	m_bAmmoHasBeenDepleted = true; // RPG is stored unloaded
+	m_bJustFiredWaitForReload = false;
 
 	m_fMinRange1 = m_fMinRange2 = 40*12;
 	m_fMaxRange1 = m_fMaxRange2 = 500*12;
@@ -1574,14 +1576,14 @@ bool CWeaponRPG::HasAnyAmmo( void )
 //-----------------------------------------------------------------------------
 bool CWeaponRPG::WeaponShouldBeLowered( void )
 {
-	// Lower us if we're out of ammo
-	if (!HasAnyAmmo())
+	// DON'T lower us if we're out of ammo, as this lowering affects the weapon we switch to from the lowered rocket launcher
+	/*if (!HasAnyAmmo())
 	{
 		CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
 		DisableIronsights(); // make sure we get out of ironsights if there's no ammo
 		pPlayer->ShowCrosshair(true); // make sure crosshair is on when we get out of ironsights
 		return true;
-	}
+	}*/
 	return BaseClass::WeaponShouldBeLowered();
 }
 
@@ -1601,7 +1603,7 @@ void CWeaponRPG::PrimaryAttack( void )
 	Vector vecOrigin;
 	Vector vecForward;
 
-	m_flNextPrimaryAttack = gpGlobals->curtime + 0.5f;
+	// m_flNextPrimaryAttack = gpGlobals->curtime + 0.5f;
 
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 	
@@ -1635,6 +1637,18 @@ void CWeaponRPG::PrimaryAttack( void )
 	pOwner->SetMuzzleFlashTime( gpGlobals->curtime + 0.5 );
 
 	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+
+	m_bInReload = true;
+
+	m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration();
+	
+	if (pOwner->GetAmmoCount(m_iPrimaryAmmoType))
+	{
+		m_bJustFiredWaitForReload = true;
+	}
+
+	DisableIronsights();
+
 	WeaponSound( SINGLE );
 
 	pOwner->RumbleEffect( RUMBLE_SHOTGUN_SINGLE, 0, RUMBLE_FLAG_RESTART );
@@ -1643,7 +1657,7 @@ void CWeaponRPG::PrimaryAttack( void )
 	gamestats->Event_WeaponFired( pOwner, true, GetClassname() );
 
 	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), 1000, 0.2, GetOwner(), SOUNDENT_CHANNEL_WEAPON );
-	NotifyRocketDied();
+	// NotifyRocketDied(); // trigger reload only after the shot animation completes
 
 	// Check to see if we should trigger any RPG firing triggers
 	int iCount = g_hWeaponFireTriggers.Count();
@@ -1754,19 +1768,24 @@ void CWeaponRPG::ItemPostFrame( void )
 	if (!m_bAmmoHasBeenDepleted && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 		m_bAmmoHasBeenDepleted = true;
 
-	if (m_bAmmoHasBeenDepleted)
+	if (m_bAmmoHasBeenDepleted && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) && gpGlobals->curtime >= m_flNextPrimaryAttack)
 	{
 		Reload();
-		return;
 	}
+
+	if (m_bJustFiredWaitForReload && gpGlobals->curtime >= m_flNextPrimaryAttack)
+	{
+		m_bJustFiredWaitForReload = false;
+		NotifyRocketDied();
+	}
+
+	BaseClass::ItemPostFrame(); // triggers reload after NotifyRocketDied()
 
 	if (m_bInReload && gpGlobals->curtime >= m_flNextPrimaryAttack)
 		m_bInReload = false;
 
 	if (!m_bInReload)
 		HoldIronsight();
-	
-	BaseClass::ItemPostFrame();
 
 	//If we're pulling the weapon out for the first time, wait to draw the laser
 	if ( ( m_bInitialStateUpdate ) && ( GetActivity() != ACT_VM_DRAW ) )
@@ -1872,7 +1891,15 @@ bool CWeaponRPG::Deploy( void )
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
 	if (pPlayer)
 		pPlayer->ShowCrosshair(true);
-	return BaseClass::Deploy();
+
+	bool return_value = BaseClass::Deploy();
+
+	if (m_bAmmoHasBeenDepleted && pPlayer->GetAmmoCount(m_iPrimaryAmmoType))
+	{
+		m_bInReload = true; // to suppress ironsight before the rocket launcher is reloaded
+	}
+
+	return return_value;
 }
 
 //-----------------------------------------------------------------------------
@@ -2050,6 +2077,8 @@ bool CWeaponRPG::Reload( void )
 	if ( pOwner == NULL )
 		return false;
 
+	DisableIronsights();
+
 	if (pOwner->IsPlayer())
 		((CBasePlayer*)pOwner)->ShowCrosshair(true); // show crosshair to fix crosshair for reloading weapons in toggle ironsight
 
@@ -2057,7 +2086,7 @@ bool CWeaponRPG::Reload( void )
 		return false;
 
 	WeaponSound( RELOAD );
-	DisableIronsights();
+
 	m_bInReload = true;
 
 	if (m_bAmmoHasBeenDepleted)

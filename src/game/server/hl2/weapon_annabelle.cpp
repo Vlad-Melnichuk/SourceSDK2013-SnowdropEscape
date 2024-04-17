@@ -164,7 +164,15 @@ bool CWeaponAnnabelle::Deploy(void)
 	if (pPlayer)
 		pPlayer->ShowCrosshair(true);
 	DisplaySDEHudHint();
-	return BaseClass::Deploy();
+
+	bool return_value = BaseClass::Deploy();
+
+	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType))
+	{
+		m_bForbidIronsight = true; // to suppress ironsight during deploy in case the weapon is empty and the player has ammo 
+	}							   // -> reload will be forced. Behavior of ironsightable weapons that don't bolt on deploy
+
+	return return_value;
 }
 bool CWeaponAnnabelle::StartReload(void)
 {
@@ -226,7 +234,6 @@ bool CWeaponAnnabelle::Reload(void)
 			{
 				WeaponSound(RELOAD);
 			}
-			FillClip();
 			return fRet;
 		}
 		else
@@ -236,7 +243,6 @@ bool CWeaponAnnabelle::Reload(void)
 			{
 				WeaponSound(RELOAD);
 			}
-			FillClip();
 			return fRet;
 		}
 
@@ -263,6 +269,9 @@ void CWeaponAnnabelle::FinishReload(void)
 	if (pOwner == NULL)
 		return;
 
+	FillClip(); // moved here to not set the ammo amount in the very reload start
+
+	m_bForbidIronsight = true; // until reload animation finishes
 	m_bInReload = false;
 
 	// Finish reload animation
@@ -506,7 +515,10 @@ void CWeaponAnnabelle::ItemPostFrame(void)
 		return;
 	}
 
-	if (!m_bInReload && m_iClip1 > 0)
+	if (m_bForbidIronsight && gpGlobals->curtime >= m_flNextPrimaryAttack)
+		m_bForbidIronsight = false;
+
+	if (!(m_bInReload || m_bForbidIronsight) && m_iClip1 > 0)
 	{
 		// Allow  Ironsight
 		HoldIronsight();

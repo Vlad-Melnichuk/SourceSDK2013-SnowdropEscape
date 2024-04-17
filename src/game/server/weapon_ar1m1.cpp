@@ -203,7 +203,12 @@ bool CWeaponar1m1::Deploy(void)
 	if (pPlayer)
 		pPlayer->ShowCrosshair(true);
 	DisplaySDEHudHint();
-	return BaseClass::Deploy();
+
+	bool return_value = BaseClass::Deploy();
+
+	m_bForbidIronsight = true; // to suppress ironsight during deploy as the weapon is bolted. Behavior of ironsightable weapons that DO bolt on deploy
+
+	return return_value;
 }
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -534,6 +539,17 @@ void CWeaponar1m1::HoldIronsight(void)
 
 void CWeaponar1m1::ItemPostFrame(void)
 {
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+
+	if (pOwner == NULL)
+		return;
+
+	if (m_bForbidIronsight && gpGlobals->curtime >= m_flNextPrimaryAttack)
+	{
+		m_bForbidIronsight = false;
+		if (!m_iClip1 && pOwner->GetAmmoCount(m_iPrimaryAmmoType))
+			Reload();
+	}
 
 	if (gpGlobals->curtime >= m_flSecondaryReloadActivationTime)
 	{
@@ -547,8 +563,8 @@ void CWeaponar1m1::ItemPostFrame(void)
 
 	// forbid ironsight if secondary reload has been activated but non deactivated yet
 
-	// Ironsight if not reloading
-	if (!(m_bInReload || m_bInSecondaryReload))
+	// Ironsight if not reloading or deploying
+	if (!(m_bInReload || m_bInSecondaryReload || m_bForbidIronsight))
 		HoldIronsight();
 
 	BaseClass::ItemPostFrame();

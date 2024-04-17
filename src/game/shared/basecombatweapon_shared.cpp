@@ -156,6 +156,7 @@ CBaseCombatWeapon::CBaseCombatWeapon()
 	m_bIsIronsighted = false;
 	m_flIronsightedTime = 0.0f;
 	m_bBoltRequired = false;
+	m_bForbidIronsight = false;
 
 #if defined( CLIENT_DLL )
 	m_iState = m_iOldState = WEAPON_NOT_CARRIED;
@@ -1584,6 +1585,7 @@ bool CBaseCombatWeapon::Holster(CBaseCombatWeapon *pSwitchingTo)
 	// cancel any reload in progress.
 	m_bInReload = false;
 	m_bInSecondaryReload = false;
+	m_bForbidIronsight = false;
 	m_bFiringWholeClip = false;
 
 	// kill any think functions
@@ -2874,16 +2876,16 @@ DEFINE_PRED_FIELD(m_iPrimaryAmmoType, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 DEFINE_PRED_FIELD(m_iSecondaryAmmoType, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 DEFINE_PRED_FIELD(m_iClip1, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 DEFINE_PRED_FIELD(m_iClip2, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
+DEFINE_PRED_FIELD(m_flTimeWeaponIdle, FIELD_FLOAT, FTYPEDESC_INSENDTABLE),
 //added
 DEFINE_PRED_FIELD( m_bIsIronsighted, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
 DEFINE_PRED_FIELD( m_flIronsightedTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
-DEFINE_PRED_FIELD( m_bBoltRequired, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
 
 DEFINE_PRED_FIELD(m_nViewModelIndex, FIELD_INTEGER, FTYPEDESC_INSENDTABLE),
 
 // Not networked
 
-DEFINE_PRED_FIELD(m_flTimeWeaponIdle, FIELD_FLOAT, FTYPEDESC_INSENDTABLE),
+
 DEFINE_FIELD(m_bInReload, FIELD_BOOLEAN),
 DEFINE_FIELD(m_bInSecondaryReload, FIELD_BOOLEAN),
 DEFINE_FIELD(m_bFireOnEmpty, FIELD_BOOLEAN),
@@ -2906,6 +2908,7 @@ DEFINE_FIELD(m_iSecondaryAmmoCount, FIELD_INTEGER),
 DEFINE_FIELD( m_bIsIronsighted, FIELD_BOOLEAN ),
 DEFINE_FIELD( m_flIronsightedTime, FIELD_FLOAT ),
 DEFINE_FIELD( m_bBoltRequired, FIELD_BOOLEAN ),
+DEFINE_FIELD( m_bForbidIronsight, FIELD_BOOLEAN ),
 
 //DEFINE_PHYSPTR( m_pConstraint ),
 
@@ -2938,7 +2941,7 @@ DEFINE_FIELD(m_bFireOnEmpty, FIELD_BOOLEAN),
 DEFINE_FIELD(m_hOwner, FIELD_EHANDLE),
 
 DEFINE_FIELD(m_bBoltRequired, FIELD_BOOLEAN),
-
+DEFINE_FIELD(m_bForbidIronsight, FIELD_BOOLEAN),
 DEFINE_FIELD(m_iState, FIELD_INTEGER),
 DEFINE_FIELD(m_iszName, FIELD_STRING),
 DEFINE_FIELD(m_iPrimaryAmmoType, FIELD_INTEGER),
@@ -3149,7 +3152,6 @@ SendPropInt(SENDINFO(m_iState), 8, SPROP_UNSIGNED),
 SendPropEHandle(SENDINFO(m_hOwner)),
 SendPropBool( SENDINFO( m_bIsIronsighted ) ),
 SendPropFloat( SENDINFO( m_flIronsightedTime ) ),
-SendPropBool(SENDINFO(m_bBoltRequired)),
 #else
 RecvPropDataTable("LocalWeaponData", 0, 0, &REFERENCE_RECV_TABLE(DT_LocalWeaponData)),
 RecvPropDataTable("LocalActiveWeaponData", 0, 0, &REFERENCE_RECV_TABLE(DT_LocalActiveWeaponData)),
@@ -3159,6 +3161,5 @@ RecvPropInt(RECVINFO(m_iState)),
 RecvPropEHandle(RECVINFO(m_hOwner)),
 RecvPropInt(RECVINFO(m_bIsIronsighted), 0, RecvProxy_ToggleSights), //note: RecvPropBool is actually RecvPropInt (see its implementation), but we need a proxy
 RecvPropFloat(RECVINFO(m_flIronsightedTime)),
-RecvPropBool(RECVINFO(m_bBoltRequired)),
 #endif
 END_NETWORK_TABLE()

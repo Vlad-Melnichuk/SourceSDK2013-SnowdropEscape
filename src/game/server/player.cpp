@@ -6554,7 +6554,7 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
 	else if (stricmp(cmd, "sde_ironsight") == 0)
 	{
 		CBaseCombatWeapon *pWeapon = GetActiveWeapon();
-		if (pWeapon != NULL && !(pWeapon->m_bInReload || pWeapon->m_bInSecondaryReload))
+		if (pWeapon != NULL && !(pWeapon->m_bInReload || pWeapon->m_bInSecondaryReload || pWeapon->m_bForbidIronsight))
 		{
 			const char* ActiveWeaponName = pWeapon->GetName();
 			if (strcmp(ActiveWeaponName, "weapon_pistol") == 0 || strcmp(ActiveWeaponName, "weapon_pistol_m1") == 0 ||
@@ -6581,7 +6581,7 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
 		return true;
 	}
 
-	else if (stricmp(cmd, "ar1m1_gl_load") == 0)
+	else if (stricmp(cmd, "sde_ar1m1_gl_load") == 0)
 	{
 		CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
 		if (pPlayer)
@@ -6591,7 +6591,7 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
 		}
 		return true;
 	}
-	else if (stricmp(cmd, "ar1m1_gl_unload") == 0)
+	else if (stricmp(cmd, "sde_ar1m1_gl_unload") == 0)
 	{
 		CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
 		if (pPlayer)
@@ -6601,7 +6601,7 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
 		}
 		return true;
 	}
-	else if (stricmp(cmd, "smg1_gl_load") == 0)
+	else if (stricmp(cmd, "sde_smg1_gl_load") == 0)
 	{
 		CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
 		if (pPlayer)
@@ -6611,7 +6611,7 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
 		}
 		return true;
 	}
-	else if (stricmp(cmd, "smg1_gl_unload") == 0)
+	else if (stricmp(cmd, "sde_smg1_gl_unload") == 0)
 	{
 		CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
 		if (pPlayer)
