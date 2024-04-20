@@ -336,6 +336,9 @@ bool CWeaponShotgun::StartReload( void )
 	m_flReloadEnd = m_flNextPrimaryAttack + 0.1f; // moved a little past primary attack
 
 	m_bInReload = true;
+
+	DisableIronsights();
+
 	return true;
 }
 
