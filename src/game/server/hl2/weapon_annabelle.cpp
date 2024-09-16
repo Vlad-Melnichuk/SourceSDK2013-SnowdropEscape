@@ -35,7 +35,7 @@ public:
 	CWeaponAnnabelle(void);
 
 	void PrimaryAttack(void);
-	void SecondaryAttack(void);
+	void SecondaryAttackNotCalledFromItemPostFrame(void);
 	void HoldIronsight(void);
 	void ItemHolsterFrame(void);
 	void ItemPostFrame(void);
@@ -518,8 +518,8 @@ void CWeaponAnnabelle::ItemPostFrame(void)
 	if (m_bForbidIronsight && gpGlobals->curtime >= m_flNextPrimaryAttack)
 		m_bForbidIronsight = false;
 
-	if (!(m_bInReload || m_bForbidIronsight) && m_iClip1 > 0)
-	{
+	if (!(m_bInReload || m_bForbidIronsight) && (m_iClip1 > 0 || (m_iClip1 <= 0 && pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0)))
+	{// if this weapon is ready or (empty && player has no ammo for it and no other useable weapons)
 		// Allow  Ironsight
 		HoldIronsight();
 
@@ -529,9 +529,9 @@ void CWeaponAnnabelle::ItemPostFrame(void)
 		}
 
 		if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
-			// toggle zoom on sniper weapon like vanilla HL2 crossbow
+			// toggle zoom on scoped weapon like vanilla HL2 crossbow
 		{
-			SecondaryAttack();
+			SecondaryAttackNotCalledFromItemPostFrame();
 		}
 
 		if ((pOwner->m_afButtonPressed & IN_RELOAD) && gpGlobals->curtime >= m_flNextPrimaryAttack)
@@ -543,7 +543,7 @@ void CWeaponAnnabelle::ItemPostFrame(void)
 		BaseClass::ItemPostFrame(); //reload
 }
 
-void CWeaponAnnabelle::SecondaryAttack(void)
+void CWeaponAnnabelle::SecondaryAttackNotCalledFromItemPostFrame(void)
 {
 	//// Only the player fires this way so we can cast
 	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
