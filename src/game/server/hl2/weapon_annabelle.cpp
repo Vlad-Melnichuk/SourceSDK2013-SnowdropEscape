@@ -35,7 +35,7 @@ public:
 	CWeaponAnnabelle(void);
 
 	void PrimaryAttack(void);
-	void SecondaryAttackNotCalledFromItemPostFrame(void);
+	void SecondaryAttackWithNonInheritedName(void);
 	void HoldIronsight(void);
 	void ItemHolsterFrame(void);
 	void ItemPostFrame(void);
@@ -519,7 +519,16 @@ void CWeaponAnnabelle::ItemPostFrame(void)
 		m_bForbidIronsight = false;
 
 	if (!(m_bInReload || m_bForbidIronsight) && (m_iClip1 > 0 || (m_iClip1 <= 0 && pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0)))
-	{// if this weapon is ready or (empty && player has no ammo for it and no other useable weapons)
+	{// if this weapon is ready or (empty && player has no ammo for it)
+
+		// if the weapon is empty and the player has no ammo for it, perform default actions (e.g. switch to a usable weapon)
+		// except attacks and reload
+		if (m_iClip1 <= 0 && pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0 && !((pOwner->m_nButtons & IN_ATTACK) ||
+			(pOwner->m_nButtons & IN_ATTACK2) || (pOwner->m_nButtons & IN_RELOAD)))
+		{
+			BaseClass::ItemPostFrame();
+		}
+
 		// Allow  Ironsight
 		HoldIronsight();
 
@@ -529,9 +538,9 @@ void CWeaponAnnabelle::ItemPostFrame(void)
 		}
 
 		if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
-			// toggle zoom on scoped weapon like vanilla HL2 crossbow
+			// toggle zoom on powerful scoped weapon like vanilla HL2 crossbow
 		{
-			SecondaryAttackNotCalledFromItemPostFrame();
+			SecondaryAttackWithNonInheritedName();
 		}
 
 		if ((pOwner->m_afButtonPressed & IN_RELOAD) && gpGlobals->curtime >= m_flNextPrimaryAttack)
@@ -543,7 +552,7 @@ void CWeaponAnnabelle::ItemPostFrame(void)
 		BaseClass::ItemPostFrame(); //reload
 }
 
-void CWeaponAnnabelle::SecondaryAttackNotCalledFromItemPostFrame(void)
+void CWeaponAnnabelle::SecondaryAttackWithNonInheritedName(void)
 {
 	//// Only the player fires this way so we can cast
 	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
