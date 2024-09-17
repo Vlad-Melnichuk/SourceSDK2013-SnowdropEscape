@@ -275,7 +275,7 @@ void CWeapon356::ItemPostFrame(void)
 		if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
 			// toggle zoom on pinpoint accuracy powerful revolver like vanilla HL2 crossbow
 		{
-			SecondaryAttackWithNonInheritedName();
+			SecondaryAttackWithNonInheritedName(); // so that it cannot be called by BaseClass::ItemPostFrame() when unneeded
 		}
 
 		if ((pOwner->m_afButtonPressed & IN_RELOAD) && gpGlobals->curtime >= m_flNextPrimaryAttack)
