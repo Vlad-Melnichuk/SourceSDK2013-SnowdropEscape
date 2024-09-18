@@ -1690,6 +1690,19 @@ void CWeaponRPG::PrimaryAttack( void )
 	
 }
 
+void CWeaponRPG::SecondaryAttackWithNonInheritedName(void)
+{
+	//// Only the player fires this way so we can cast
+	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
+	if (!pOwner)
+	{
+		return;
+	}
+
+	ToggleIronsights();
+	pOwner->ToggleCrosshair();
+}
+
 void CWeaponRPG::HoldIronsight(void)
 {
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
@@ -1785,7 +1798,11 @@ void CWeaponRPG::ItemPostFrame( void )
 		m_bInReload = false;
 
 	if (!m_bInReload)
+	{
 		HoldIronsight();
+		if ((pPlayer->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextPrimaryAttack)
+			SecondaryAttackWithNonInheritedName(); // so that it cannot be called by BaseClass::ItemPostFrame() when unneeded
+	}
 
 	//If we're pulling the weapon out for the first time, wait to draw the laser
 	if ( ( m_bInitialStateUpdate ) && ( GetActivity() != ACT_VM_DRAW ) )

@@ -35,7 +35,7 @@ public:
 	CWeapon356( void );
 
 	void	PrimaryAttack( void );
-	void	SecondaryAttack(void);
+	void	SecondaryAttackWithNonInheritedName(void);
 	void	HoldIronsight(void);
 	virtual void	ItemPostFrame(void);
 	bool	Deploy(void);
@@ -229,7 +229,7 @@ void CWeapon356::HoldIronsight(void)
 	}
 }
 
-void CWeapon356::SecondaryAttack(void)
+void CWeapon356::SecondaryAttackWithNonInheritedName(void)
 {
 	//// Only the player fires this way so we can cast
 	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
@@ -253,26 +253,35 @@ void CWeapon356::ItemPostFrame(void)
 	if (m_bForbidIronsight && gpGlobals->curtime >= m_flNextPrimaryAttack)
 		m_bForbidIronsight = false;
 
-	if (!(m_bInReload || m_bForbidIronsight) && m_iClip1 > 0)
-	{
+	if (!(m_bInReload || m_bForbidIronsight) && (m_iClip1 > 0 || (m_iClip1 <= 0 && pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0)))
+	{// if this weapon is ready or (empty && player has no ammo for it)
+
+		// if the weapon is empty and the player has no ammo for it, perform default actions (e.g. switch to a usable weapon)
+		// except attacks and reload
+		if (m_iClip1 <= 0 && pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0 && !((pOwner->m_nButtons & IN_ATTACK) ||
+			(pOwner->m_nButtons & IN_ATTACK2) || (pOwner->m_nButtons & IN_RELOAD)))
+		{
+			BaseClass::ItemPostFrame();
+		}
+
 		// Allow  Ironsight
 		HoldIronsight();
+
 		if ((pOwner->m_afButtonPressed & IN_ATTACK) && gpGlobals->curtime >= m_flNextPrimaryAttack)
 		{
 			PrimaryAttack();
 		}
 
 		if ((pOwner->m_afButtonPressed & IN_ATTACK2) && gpGlobals->curtime >= m_flNextSecondaryAttack)
-			// toggle zoom on rifle like vanilla HL2 crossbow
+			// toggle zoom on pinpoint accuracy powerful revolver like vanilla HL2 crossbow
 		{
-			SecondaryAttack();
+			SecondaryAttackWithNonInheritedName(); // so that it cannot be called by BaseClass::ItemPostFrame() when unneeded
 		}
 
 		if ((pOwner->m_afButtonPressed & IN_RELOAD) && gpGlobals->curtime >= m_flNextPrimaryAttack)
 		{
 			Reload();
 		}
-
 	}
 	else
 		BaseClass::ItemPostFrame(); //reload
